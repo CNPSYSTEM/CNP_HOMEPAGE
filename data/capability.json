@@ -1,0 +1,13 @@
+{
+  "note": "Only items with \"verified\": true are rendered on the site. Set an item to true only after confirming it is factually accurate for C&P, then no redesign is needed.",
+  "items": [
+    { "id": "design", "label": "디자인", "verified": true },
+    { "id": "print", "label": "인쇄", "verified": true },
+    { "id": "binding", "label": "제본", "verified": true },
+    { "id": "finishing", "label": "후가공", "verified": true },
+    { "id": "large-format", "label": "대형출력", "verified": true },
+    { "id": "quote-issuance", "label": "견적서 발행", "verified": false },
+    { "id": "tax-invoice", "label": "세금계산서 발행", "verified": false },
+    { "id": "card-payment", "label": "카드결제", "verified": false }
+  ]
+}

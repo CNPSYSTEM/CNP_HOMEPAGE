@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C&amp;P SYSTEM — 디자인과 인쇄 제작</title>
+  <meta name="description" content="공공기관·교육기관·기업의 디자인과 인쇄 제작을 함께합니다. 좋은 디자인이 좋은 결과물이 되는 과정, C&amp;P SYSTEM." />
+  <!-- SEO: canonical URL, Open Graph, favicon → added in Phase 5 after domain/브랜드 자산 확정 -->
+  <!--
+    한글 웹폰트: 초기 버전은 시스템 폰트 스택만 사용합니다.
+    합법적으로 사용 가능한 웹폰트(예: Pretendard, SIL OFL)를 채택하기로 결정하면
+    아래 링크 주석을 해제하고 css/styles.css의 --font-sans 변수만 교체하면 됩니다.
+    <link rel="stylesheet" as="style" crossorigin
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <a class="skip-link" href="#main">본문 바로가기</a>
+
+  <!-- ============ SECTION 00 — HEADER ============ -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <a href="#top" class="logo">C&amp;P <span>SYSTEM</span></a>
+
+      <nav class="main-nav" id="main-nav" aria-label="주요 메뉴">
+        <ul>
+          <li><a href="#about">ABOUT</a></li>
+          <li><a href="#design">DESIGN</a></li>
+          <li><a href="#print">PRINT</a></li>
+          <li><a href="#contact">CONTACT</a></li>
+        </ul>
+      </nav>
+
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="main-nav">
+        <span class="sr-only">메뉴 열기</span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============ SECTION 01 — HERO ============ -->
+    <section class="hero" id="top">
+      <div class="hero-media">
+        <img src="assets/images/hero-main.png" alt="C&amp;P SYSTEM 인쇄 제작물" class="hero-image" />
+      </div>
+      <div class="hero-content">
+        <p class="eyebrow">DESIGN · PRINT · FINISHING</p>
+        <h1 class="hero-title">
+          좋은 디자인이<br />
+          좋은 결과물이 되는 과정.
+        </h1>
+        <p class="hero-sub">
+          공공기관 · 교육기관 · 기업의<br />
+          디자인과 인쇄 제작을 함께합니다.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 02 — ABOUT ============ -->
+    <section class="about" id="about">
+      <div class="about-media">
+        <div class="image-placeholder" role="img" aria-label="C&amp;P SYSTEM 작업 공간 사진 (준비 중)">
+          <span>[VERIFY: 실제 작업 공간/생산 현장 사진으로 교체 필요]</span>
+        </div>
+      </div>
+      <div class="about-content">
+        <p class="eyebrow">ABOUT C&amp;P SYSTEM</p>
+        <h2 class="reveal">
+          디자인하는 곳과<br />
+          만드는 곳이 같습니다.
+        </h2>
+        <p class="about-body reveal">
+          디자인과 인쇄 제작을 함께합니다.<br />
+          화면에서 손에 들려질 때까지, 처음부터 끝까지 책임집니다.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 03 — DESIGN / PORTFOLIO ============ -->
+    <section class="work" id="design">
+      <div class="section-inner">
+        <p class="eyebrow">DESIGN</p>
+        <h2 class="reveal">
+          다양한 프로젝트 경험이<br />
+          신뢰를 만듭니다.
+        </h2>
+
+        <div class="work-grid" id="work-grid" aria-live="polite">
+          <!-- portfolio cards injected by js/main.js from data/portfolio.json -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 04 — PRINT ============ -->
+    <section class="capability" id="print">
+      <div class="section-inner">
+        <p class="eyebrow">PRINT</p>
+        <h2 class="reveal">
+          디자인부터 제작까지,<br />
+          한곳에서 이어집니다.
+        </h2>
+
+        <ul class="capability-grid" id="capability-grid" aria-live="polite">
+          <!-- capability items injected by js/main.js from data/capability.json (verified items only) -->
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 05 — SELECTED CLIENTS (HIDDEN) ============ -->
+    <!-- Completely hidden in v1. To be activated once verified client/organization data is available. -->
+    <section class="clients" id="clients" hidden>
+      <div class="section-inner">
+        <p class="eyebrow">SELECTED CLIENTS</p>
+        <ul class="clients-grid" id="clients-grid"></ul>
+        <p class="clients-note">외 다수 기관 및 기업</p>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 07 — CONTACT ============ -->
+    <section class="contact" id="contact">
+      <div class="section-inner">
+        <p class="eyebrow">CONTACT</p>
+        <h2 class="reveal">제작을 계획하고 계신가요?</h2>
+        <p class="contact-body reveal">
+          제작 내용과 파일을 보내주시면<br />
+          확인 후 견적과 제작 방법을 안내드립니다.
+        </p>
+
+        <div class="contact-cta reveal">
+          <a class="cta-card" href="mailto:cnp3900@naver.com">
+            <span class="cta-title">파일 · 견적 문의</span>
+            <span class="cta-desc">이메일로 파일과 제작 내용을 보내주세요.</span>
+            <span class="cta-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="cta-card" href="http://pf.kakao.com/_xeKpQs">
+            <span class="cta-title">카카오톡 문의</span>
+            <span class="cta-desc">카카오 채널로 실시간 상담 가능합니다.</span>
+            <span class="cta-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="section-inner footer-inner">
+      <p class="footer-logo">C&amp;P SYSTEM</p>
+      <ul class="footer-meta">
+        <li>천안시 서북구 백석로 10 씨앤피시스템</li>
+        <li>T. <a href="tel:0415573900">041-557-3900</a> / <a href="tel:0415573920">041-557-3920</a></li>
+        <li>E. <a href="mailto:cnp3900@naver.com">cnp3900@naver.com</a></li>
+        <li>평일 09:00~18:30 / 주말·공휴일 휴무</li>
+        <li>사업자등록번호: 429-23-01567</li>
+      </ul>
+      <p class="footer-copyright">&copy; <span id="footer-year"></span> C&amp;P SYSTEM. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

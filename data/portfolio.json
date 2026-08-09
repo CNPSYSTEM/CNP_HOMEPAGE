@@ -1,0 +1,47 @@
+{
+  "note": "Portfolio projects with actual image assets. All entries verified and live.",
+  "projects": [
+    {
+      "id": "project-001",
+      "title": "SFA AI Robotics Open House",
+      "scope": "EVENT · BRANDING · PRINT",
+      "image": "assets/images/portfolio/project-001-sfa-open-house.jpg",
+      "isPlaceholder": false
+    },
+    {
+      "id": "project-002",
+      "title": "책드림, 행복드림",
+      "scope": "PUBLIC · CAMPAIGN · EDITORIAL",
+      "image": "assets/images/portfolio/project-002-bookdream.jpg",
+      "isPlaceholder": false
+    },
+    {
+      "id": "project-003",
+      "title": "인생극장",
+      "scope": "EDITORIAL · BOOK · PRINT",
+      "image": "assets/images/portfolio/project-003-life-theater.jpg",
+      "isPlaceholder": false
+    },
+    {
+      "id": "project-004",
+      "title": "소방안전강사 장애학생지원 역량 강화",
+      "scope": "PUBLIC · EDUCATION · EDITORIAL",
+      "image": "assets/images/portfolio/project-004-fire-education.jpg",
+      "isPlaceholder": false
+    },
+    {
+      "id": "project-005",
+      "title": "학생탐구활동 연구일지",
+      "scope": "EDUCATION · EDITORIAL · PRINT",
+      "image": "assets/images/portfolio/project-005-student-research.jpg",
+      "isPlaceholder": false
+    },
+    {
+      "id": "project-006",
+      "title": "MGPK 물질유해위험정보",
+      "scope": "CORPORATE · INDUSTRIAL · EDITORIAL",
+      "image": "assets/images/portfolio/project-006-mgpk-msds.jpg",
+      "isPlaceholder": false
+    }
+  ]
+}
