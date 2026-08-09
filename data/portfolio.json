@@ -10,16 +10,16 @@
     },
     {
       "id": "project-002",
-      "title": "책드림, 행복드림",
-      "scope": "PUBLIC · CAMPAIGN · EDITORIAL",
-      "image": "assets/images/portfolio/project-002-bookdream.jpg",
+      "title": "예안김씨 세보해설",
+      "scope": "EDITORIAL · BOOK · PRINT",
+      "image": "assets/images/portfolio/project-002-yean-kim-genealogy.jpg",
       "isPlaceholder": false
     },
     {
       "id": "project-003",
-      "title": "인생극장",
-      "scope": "EDITORIAL · BOOK · PRINT",
-      "image": "assets/images/portfolio/project-003-life-theater.jpg",
+      "title": "한국 지방 공기업 정책포럼",
+      "scope": "PUBLIC · CORPORATE · EDITORIAL",
+      "image": "assets/images/portfolio/project-003-korea-public-forum.jpg",
       "isPlaceholder": false
     },
     {
@@ -38,9 +38,9 @@
     },
     {
       "id": "project-006",
-      "title": "MGPK 물질유해위험정보",
-      "scope": "CORPORATE · INDUSTRIAL · EDITORIAL",
-      "image": "assets/images/portfolio/project-006-mgpk-msds.jpg",
+      "title": "더함앙상블",
+      "scope": "CULTURE · EDITORIAL · PRINT",
+      "image": "assets/images/portfolio/project-006-hahm-ensemble.jpg",
       "isPlaceholder": false
     }
   ]
