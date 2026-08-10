@@ -750,6 +750,48 @@ button {
     display: flex;
   }
 
+  .hero {
+    flex-direction: column-reverse;
+    min-height: auto;
+  }
+
+  .hero-media {
+    width: 100%;
+    order: initial;
+    min-height: 340px;
+  }
+
+  .hero-media .image-placeholder {
+    height: auto;
+    min-height: 280px;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: auto;
+    min-height: 280px;
+    object-fit: cover;
+  }
+
+  .hero-content {
+    width: 100%;
+    order: initial;
+    padding: clamp(60px, 8vw, 80px);
+  }
+
+  .hero .eyebrow {
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .hero-sub {
+    display: block;
+    font-size: clamp(0.9rem, 3vw, 1rem);
+    line-height: 1.7;
+    margin-top: 12px;
+    color: var(--color-on-dark-muted);
+  }
+
   .hero-title {
     font-size: clamp(1.8rem, 4.5vw, 2.8rem);
   }
