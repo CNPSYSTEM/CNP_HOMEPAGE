@@ -30,6 +30,17 @@
  },
  "works": [
   {
+   "slug": "w261120-zak",
+   "title": "더함 기획시리즈 2 낭만주의 거장 차이코프스키",
+   "client": "더함앙상블",
+   "thumb": "/media/works/wrupc80zw/p31ymty_t.jpg",
+   "fit": "cover",
+   "pos": [
+    50,
+    50
+   ]
+  },
+  {
    "slug": "w261120-5qq",
    "title": "상자모+ BI",
    "client": "천안아산자영업자협동조합 상자모+",

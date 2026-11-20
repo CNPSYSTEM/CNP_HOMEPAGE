@@ -42,6 +42,40 @@
  ],
  "works": [
   {
+   "id": "wrupc80zw",
+   "slug": "w261120-zak",
+   "title": "더함 기획시리즈 2 낭만주의 거장 차이코프스키",
+   "status": "public",
+   "client": "더함앙상블",
+   "category": "포스터",
+   "desc": "",
+   "specs": [],
+   "photos": [
+    {
+     "id": "p31ymty",
+     "w": 2000,
+     "h": 1500,
+     "tw": 900,
+     "th": 675
+    },
+    {
+     "id": "pirv17r",
+     "w": 2000,
+     "h": 1333,
+     "tw": 900,
+     "th": 600
+    }
+   ],
+   "cover": "p31ymty",
+   "thumbFit": "cover",
+   "thumbPos": [
+    50,
+    50
+   ],
+   "created": "2026-11-20",
+   "updated": "2026-11-20"
+  },
+  {
    "id": "wp7yu1jfk",
    "slug": "w261120-5qq",
    "title": "상자모+ BI",
@@ -525,6 +559,7 @@
   }
  ],
  "order": [
+  "wrupc80zw",
   "wp7yu1jfk",
   "w8d07u4wr",
   "w7lahi4ge",
