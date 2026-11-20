@@ -45,13 +45,27 @@
    "title": "SFA AI Robotics Open House",
    "status": "public",
    "category": "리플렛·브로슈어",
-   "desc": "",
+   "desc": "2026년 가족의 달 행사 리플렛\nSFA AI Robotics Open House",
    "specs": [],
    "photos": [
     {
      "id": "p1",
      "w": 1536,
      "h": 1152,
+     "tw": 900,
+     "th": 675
+    },
+    {
+     "id": "p5g59zo",
+     "w": 2000,
+     "h": 1500,
+     "tw": 900,
+     "th": 675
+    },
+    {
+     "id": "pqbi1jz",
+     "w": 2000,
+     "h": 1500,
      "tw": 900,
      "th": 675
     }
@@ -63,8 +77,8 @@
     50
    ],
    "created": "2026-11-18",
-   "updated": "2026-11-18",
-   "client": ""
+   "updated": "2026-11-20",
+   "client": "SFA 에스에프에이"
   },
   {
    "id": "w002",
