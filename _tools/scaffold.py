@@ -13,6 +13,11 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://cnpsystem.kr"
 NAME = "씨앤피시스템"
 
+# 검색 등록(네이버 서치어드바이저 · 구글 서치콘솔) 소유확인 코드. 새 코드를 받으면 한 줄씩 추가합니다.
+SITE_VERIFY = [
+    '<meta name="naver-site-verification" content="80fee4017d0725913e32d8c14e9f46170c089cc9" />',
+]
+
 MENU = [("/about/", "회사소개"), ("/portfolio/", "포트폴리오"),
         ("/contact/", "견적문의"), ("/guide/", "안내")]
 
@@ -20,13 +25,15 @@ MENU = [("/about/", "회사소개"), ("/portfolio/", "포트폴리오"),
 def head(title, desc, path, og_image=SITE + "/assets/og-logo.png", noindex=False):
     robots = '\n  <meta name="robots" content="noindex" />' if noindex else ""
     canonical = "" if noindex else f'\n  <link rel="canonical" href="{SITE}{path}" />'
+    # 검색엔진 소유확인 코드: 홈 화면에만 넣습니다
+    verify = "".join("\n  " + v for v in SITE_VERIFY) if path == "/" else ""
     return f"""<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>{title}</title>
-  <meta name="description" content="{desc}" />{robots}{canonical}
+  <meta name="description" content="{desc}" />{robots}{canonical}{verify}
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="{NAME}" />
   <meta property="og:title" content="{title}" />
