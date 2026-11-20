@@ -30,6 +30,17 @@
  },
  "works": [
   {
+   "slug": "w261120-fi8",
+   "title": "브레드보드 배너",
+   "client": "브레드보드",
+   "thumb": "/media/works/w7lahi4ge/prgbqry_t.jpg",
+   "fit": "cover",
+   "pos": [
+    50,
+    50
+   ]
+  },
+  {
    "slug": "w261120-gor",
    "title": "소방안전강사를 위한 장애학생 지원 역량 강화",
    "client": "소방청, 국립특수교육원",

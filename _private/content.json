@@ -40,6 +40,33 @@
  ],
  "works": [
   {
+   "id": "w7lahi4ge",
+   "slug": "w261120-fi8",
+   "title": "브레드보드 배너",
+   "status": "public",
+   "client": "브레드보드",
+   "category": "현수막·배너",
+   "desc": "",
+   "specs": [],
+   "photos": [
+    {
+     "id": "prgbqry",
+     "w": 2000,
+     "h": 1556,
+     "tw": 900,
+     "th": 700
+    }
+   ],
+   "cover": "prgbqry",
+   "thumbFit": "cover",
+   "thumbPos": [
+    50,
+    50
+   ],
+   "created": "2026-11-20",
+   "updated": "2026-11-20"
+  },
+  {
    "id": "w27y6sbjz",
    "slug": "w261120-gor",
    "title": "소방안전강사를 위한 장애학생 지원 역량 강화",
@@ -442,6 +469,7 @@
   }
  ],
  "order": [
+  "w7lahi4ge",
   "w27y6sbjz",
   "woqxxg9uw",
   "wvqy4bi27",
