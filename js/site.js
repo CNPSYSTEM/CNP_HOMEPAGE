@@ -202,6 +202,124 @@
   }
 
   /* =========================================================
+     1-2. 포트폴리오 · 회사소개 페이지 : 한 화면씩 넘기는 슬라이드식 스크롤
+     ========================================================= */
+  // getPoints(): 멈출 위치(문서 맨 위에서부터의 거리, px) 목록을 돌려주는 함수
+  function initPageSlides(getPoints) {
+    var REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var STEP = REDUCED ? 0 : 620, QUIET = 180;
+    var locked = false, lockMin = 0, lockMax = 0, lastWheel = 0, anim = null;
+    var root = document.scrollingElement || document.documentElement;
+    function headerH() { var h = document.querySelector(".site-header"); return h ? h.getBoundingClientRect().height : 0; }
+    function maxTop() { return Math.max(0, root.scrollHeight - window.innerHeight); }
+    function points() {
+      var mx = maxTop(), seen = {}, out = [0];
+      getPoints(headerH()).forEach(function (v) {
+        v = Math.max(0, Math.min(Math.round(v), mx));
+        if (v > 4 && !seen[v]) { seen[v] = 1; out.push(v); }
+      });
+      return out.sort(function (x, y) { return x - y; });
+    }
+    function lock(ms) { var now = performance.now(); locked = true; lockMin = now + ms + 60; lockMax = lockMin + 1800; }
+    function animateTo(target, ms) {
+      target = Math.max(0, Math.min(Math.round(target), maxTop()));
+      if (anim) cancelAnimationFrame(anim.raf);
+      anim = null;
+      lock(ms);
+      if (!ms) { window.scrollTo(0, target); return; }
+      var from = window.scrollY, t0 = performance.now();
+      anim = { raf: 0 };
+      function tick(now) {
+        var k = Math.min(1, (now - t0) / ms);
+        var e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+        window.scrollTo(0, from + (target - from) * e);
+        if (k < 1) anim.raf = requestAnimationFrame(tick); else anim = null;
+      }
+      anim.raf = requestAnimationFrame(tick);
+    }
+    function step(dir) {
+      var p = points(), top = window.scrollY, vh = window.innerHeight - headerH(), mx = maxTop();
+      if (dir > 0) {
+        if (top >= mx - 1) return false;
+        var next = p.filter(function (v) { return v > top + 1; })[0];
+        if (next === undefined) next = mx;                       // 마지막 구간: 남은 만큼
+        // 화면보다 훨씬 긴 구간만 그 안에서 한 쪽씩 넘기고, 조금 넘치는 정도면 바로 다음으로
+        var target = (next - top > vh * 1.35) ? Math.min(top + vh * 0.85, next - vh) : next;
+        if (target <= top + 1) target = next;
+        animateTo(target, STEP); return true;
+      }
+      if (top <= 0) return false;
+      var before = p.filter(function (v) { return v < top - 1; });
+      var prev = before.length ? before[before.length - 1] : 0;
+      animateTo((top - prev > vh * 1.35) ? Math.max(top - vh * 0.85, prev) : prev, STEP);
+      return true;
+    }
+    window.addEventListener("wheel", function (e) {
+      if (e.ctrlKey) return;
+      var now = performance.now(), gap = now - lastWheel;
+      lastWheel = now;
+      if (locked) {
+        if (now < lockMin || (gap < QUIET && now < lockMax)) { e.preventDefault(); return; }
+        locked = false;
+      }
+      if (!e.deltaY) return;
+      e.preventDefault();
+      step(e.deltaY > 0 ? 1 : -1);
+    }, { passive: false });
+    window.addEventListener("keydown", function (e) {
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      var t = e.target;
+      if (t && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
+      if (e.key === " " && t && /^(A|BUTTON)$/.test(t.tagName)) return;
+      var down = ["ArrowDown", "PageDown", " "].indexOf(e.key) > -1, up = ["ArrowUp", "PageUp"].indexOf(e.key) > -1;
+      if (!down && !up) return;
+      e.preventDefault();
+      if (locked && performance.now() < lockMin) return;
+      step(down ? 1 : -1);
+    });
+    var ty = null;
+    window.addEventListener("touchstart", function (e) { ty = e.touches.length === 1 ? e.touches[0].clientY : null; }, { passive: true });
+    window.addEventListener("touchmove", function (e) { if (ty !== null && e.touches.length === 1 && e.cancelable) e.preventDefault(); }, { passive: false });
+    window.addEventListener("touchend", function (e) {
+      if (ty === null) return;
+      var dy = e.changedTouches[0].clientY - ty;
+      ty = null;
+      if (locked && performance.now() < lockMin) return;
+      if (dy < -36) step(1); else if (dy > 36) step(-1);
+    }, { passive: true });
+  }
+
+  // 포트폴리오 페이지: 화면에 들어가는 줄 수만큼씩 넘김
+  if (document.body.classList.contains("page-portfolio")) {
+    initPageSlides(function (hh) {
+      var grid = document.querySelector(".grid");
+      if (!grid) return [];
+      var tops = [], seen = {};
+      Array.prototype.forEach.call(grid.children, function (li) {
+        var r = li.getBoundingClientRect();
+        if (!r.height) return;
+        var t = Math.round(r.top + window.scrollY);
+        if (!seen[t]) { seen[t] = 1; tops.push({ top: t, h: r.height }); }
+      });
+      if (tops.length < 2) return [];
+      var rowStep = tops[1].top - tops[0].top;                         // 한 줄 높이(간격 포함)
+      var gap = Math.max(0, rowStep - tops[0].h);
+      var per = Math.max(1, Math.floor((window.innerHeight - hh) / rowStep)); // 한 화면에 온전히 보이는 줄 수
+      var out = [];
+      for (var i = per; i < tops.length; i += per) out.push(tops[i].top - hh - gap);
+      return out;
+    });
+  }
+  // 회사소개 페이지: 소개글 → 회사개요 → 강점 → 서비스 분야 → 마무리
+  if (document.body.classList.contains("page-about")) {
+    initPageSlides(function (hh) {
+      return Array.prototype.map.call(document.querySelectorAll(".about .doc-section, .about .about-closing"), function (el) {
+        return el.getBoundingClientRect().top + window.scrollY - hh;
+      });
+    });
+  }
+
+  /* =========================================================
      2. 작품 상세 : "목록" 을 누르면 보던 위치로 돌아가기
      ========================================================= */
   document.querySelectorAll("a[data-back]").forEach(function (a) {

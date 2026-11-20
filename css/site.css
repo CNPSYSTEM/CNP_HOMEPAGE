@@ -405,7 +405,7 @@ html.js.no-anim .home .panel, html.js.no-anim .site-header { transition: none; }
 html.js .home .home-intro,
 html.js .home .home-works { min-height: calc(100vh - var(--header-h)); min-height: calc(100svh - var(--header-h)); }
 html.js .home .home-intro { display: flex; flex-direction: column; justify-content: center; padding-top: clamp(20px, 4vh, 48px); padding-bottom: clamp(20px, 4vh, 48px); }
-html.js .home .home-works { padding-top: clamp(18px, 3vh, 36px); }
+html.js .home .home-works { padding-top: 0; }
 @media (min-width: 900px) {
   /* 컴퓨터: 강점 + 서비스 분야가 한 화면에 들어가도록 조금 촘촘하게 */
   html.js .home .home-sec + .home-sec { margin-top: clamp(28px, 5.5vh, 64px); }

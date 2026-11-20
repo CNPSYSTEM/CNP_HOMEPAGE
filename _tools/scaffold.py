@@ -143,7 +143,7 @@ PAGES["index.html"] = f"""{head(HOME_TITLE, HOME_DESC, "/")}
       </div>
 
       <section class="home-works" aria-labelledby="home-portfolio">
-        <h2 class="home-h home-works-h" id="home-portfolio">포트폴리오</h2>
+        <h2 class="sr-only" id="home-portfolio">포트폴리오</h2>
         <!-- 홈에는 최근 순서로 4줄(PC 16개 · 모바일 8개)까지만 보이고, 전체는 포트폴리오 페이지에서 봅니다 -->
         <ul class="grid">
 <!--WORKS:START--><!--WORKS:END-->
