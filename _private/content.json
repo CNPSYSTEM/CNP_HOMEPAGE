@@ -37,9 +37,37 @@
   "스티커·라벨",
   "명함·봉투",
   "기타",
-  "엽서"
+  "엽서",
+  "CI, BI"
  ],
  "works": [
+  {
+   "id": "wp7yu1jfk",
+   "slug": "w261120-5qq",
+   "title": "상자모+ BI",
+   "status": "public",
+   "client": "천안아산자영업자협동조합 상자모+",
+   "category": "CI, BI",
+   "desc": "",
+   "specs": [],
+   "photos": [
+    {
+     "id": "pkanenw",
+     "w": 2000,
+     "h": 1333,
+     "tw": 900,
+     "th": 600
+    }
+   ],
+   "cover": "pkanenw",
+   "thumbFit": "cover",
+   "thumbPos": [
+    50,
+    50
+   ],
+   "created": "2026-11-20",
+   "updated": "2026-11-20"
+  },
   {
    "id": "w8d07u4wr",
    "slug": "w261120-daz",
@@ -497,6 +525,7 @@
   }
  ],
  "order": [
+  "wp7yu1jfk",
   "w8d07u4wr",
   "w7lahi4ge",
   "w27y6sbjz",

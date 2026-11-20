@@ -30,6 +30,17 @@
  },
  "works": [
   {
+   "slug": "w261120-5qq",
+   "title": "상자모+ BI",
+   "client": "천안아산자영업자협동조합 상자모+",
+   "thumb": "/media/works/wp7yu1jfk/pkanenw_t.jpg",
+   "fit": "cover",
+   "pos": [
+    50,
+    50
+   ]
+  },
+  {
    "slug": "w261120-daz",
    "title": "용돈기입장 설명서",
    "client": "마이아쉬르",
