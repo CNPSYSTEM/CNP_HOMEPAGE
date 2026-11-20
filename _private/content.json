@@ -36,9 +36,37 @@
   "현수막·배너",
   "스티커·라벨",
   "명함·봉투",
-  "기타"
+  "기타",
+  "엽서"
  ],
  "works": [
+  {
+   "id": "w8d07u4wr",
+   "slug": "w261120-daz",
+   "title": "용돈기입장 설명서",
+   "status": "public",
+   "client": "마이아쉬르",
+   "category": "엽서",
+   "desc": "",
+   "specs": [],
+   "photos": [
+    {
+     "id": "pcb99hk",
+     "w": 2000,
+     "h": 1333,
+     "tw": 900,
+     "th": 600
+    }
+   ],
+   "cover": "pcb99hk",
+   "thumbFit": "cover",
+   "thumbPos": [
+    37,
+    50
+   ],
+   "created": "2026-11-20",
+   "updated": "2026-11-20"
+  },
   {
    "id": "w7lahi4ge",
    "slug": "w261120-fi8",
@@ -469,6 +497,7 @@
   }
  ],
  "order": [
+  "w8d07u4wr",
   "w7lahi4ge",
   "w27y6sbjz",
   "woqxxg9uw",

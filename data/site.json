@@ -30,6 +30,17 @@
  },
  "works": [
   {
+   "slug": "w261120-daz",
+   "title": "용돈기입장 설명서",
+   "client": "마이아쉬르",
+   "thumb": "/media/works/w8d07u4wr/pcb99hk_t.jpg",
+   "fit": "cover",
+   "pos": [
+    37,
+    50
+   ]
+  },
+  {
    "slug": "w261120-fi8",
    "title": "브레드보드 배너",
    "client": "브레드보드",
