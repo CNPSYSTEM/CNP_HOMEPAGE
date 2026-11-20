@@ -40,6 +40,40 @@
  ],
  "works": [
   {
+   "id": "w7wlvszof",
+   "slug": "w261120-86o",
+   "title": "책드림, 행복드림",
+   "status": "public",
+   "client": "천안도서관",
+   "category": "리플렛·브로슈어",
+   "desc": "",
+   "specs": [],
+   "photos": [
+    {
+     "id": "pbnre1r",
+     "w": 2000,
+     "h": 1333,
+     "tw": 900,
+     "th": 600
+    },
+    {
+     "id": "pnt8wr0",
+     "w": 2000,
+     "h": 1333,
+     "tw": 900,
+     "th": 600
+    }
+   ],
+   "cover": "pnt8wr0",
+   "thumbFit": "cover",
+   "thumbPos": [
+    50,
+    50
+   ],
+   "created": "2026-11-20",
+   "updated": "2026-11-20"
+  },
+  {
    "id": "w001",
    "slug": "sfa-open-house",
    "title": "SFA AI Robotics Open House",
@@ -278,6 +312,7 @@
   }
  ],
  "order": [
+  "w7wlvszof",
   "w001",
   "w002",
   "w003",

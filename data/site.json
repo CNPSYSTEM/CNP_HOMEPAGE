@@ -30,6 +30,17 @@
  },
  "works": [
   {
+   "slug": "w261120-86o",
+   "title": "책드림, 행복드림",
+   "client": "천안도서관",
+   "thumb": "/media/works/w7wlvszof/pnt8wr0_t.jpg",
+   "fit": "cover",
+   "pos": [
+    50,
+    50
+   ]
+  },
+  {
    "slug": "sfa-open-house",
    "title": "SFA AI Robotics Open House",
    "client": "SFA 에스에프에이",
