@@ -16,6 +16,7 @@ NAME = "씨앤피시스템"
 # 검색 등록(네이버 서치어드바이저 · 구글 서치콘솔) 소유확인 코드. 새 코드를 받으면 한 줄씩 추가합니다.
 SITE_VERIFY = [
     '<meta name="naver-site-verification" content="80fee4017d0725913e32d8c14e9f46170c089cc9" />',
+    '<meta name="google-site-verification" content="y0vHB-rFDtwpyYZ2FzXnPxqz-KvU6QkRSHzd2wvu_Qo" />',
 ]
 
 MENU = [("/about/", "회사소개"), ("/portfolio/", "포트폴리오"),
