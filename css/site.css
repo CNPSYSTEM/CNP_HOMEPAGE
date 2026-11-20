@@ -254,6 +254,10 @@ html.js.no-anim .home .panel, html.js.no-anim .site-header { transition: none; }
 .about-body { margin-top: clamp(20px, 3.4vw, 32px); max-width: 44em; }
 .about-body p { color: var(--ink-soft); font-size: 1.02rem; line-height: 1.85; }
 .about-body p + p { margin-top: 1.15em; }
+/* 휴대폰에서는 지정 줄바꿈을 풀어 화면 폭에 맞게 자연스럽게 흐르게 함 (짧은 두 줄짜리 문장만 유지) */
+@media (max-width: 899px) {
+  .about-body br:not(.keep) { display: none; }
+}
 .about-intro { padding-bottom: clamp(36px, 6vw, 64px); }
 .about .doc-section h2 { font-size: clamp(1.1rem, 2.6vw, 1.3rem); margin-bottom: clamp(14px, 2.4vw, 22px); }
 .about-table { width: 100%; border-collapse: collapse; table-layout: fixed; border-top: 2px solid var(--ink); }

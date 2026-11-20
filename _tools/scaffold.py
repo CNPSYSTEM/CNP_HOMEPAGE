@@ -23,7 +23,7 @@ MENU = [("/about/", "회사소개"), ("/portfolio/", "포트폴리오"),
         ("/contact/", "견적문의"), ("/guide/", "안내")]
 
 
-def head(title, desc, path, og_image=SITE + "/assets/og-logo.png", noindex=False):
+def head(title, desc, path, og_image=SITE + "/assets/og-logo.png", noindex=False, extra=""):
     robots = '\n  <meta name="robots" content="noindex" />' if noindex else ""
     canonical = "" if noindex else f'\n  <link rel="canonical" href="{SITE}{path}" />'
     # 검색엔진 소유확인 코드: 홈 화면에만 넣습니다
@@ -44,7 +44,7 @@ def head(title, desc, path, og_image=SITE + "/assets/og-logo.png", noindex=False
   <meta property="og:locale" content="ko_KR" />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
-  <link rel="stylesheet" href="/css/site.css" />
+{extra}  <link rel="stylesheet" href="/css/site.css" />
 </head>"""
 
 
@@ -182,21 +182,22 @@ PAGES["about/index.html"] = f"""{head("회사소개 | 씨앤피시스템", "1988
 
     <section class="about-intro">
       <p class="about-eyebrow" lang="en">SINCE 1988 · CREATIVE &amp; PRINT SYSTEM</p>
-      <p class="about-lead">Copy에서 Creative로, 인쇄의 경험에 디자인의 시선을 더하다.</p>
+      <p class="about-lead">Copy에서 Creative로,<br />
+      축적된 인쇄의 경험에 디자인의 시선을 더하다.</p>
       <div class="about-body">
         <p>1988년 경남 창원의 ‘경남측기사’에서 시작된 씨앤피시스템은<br />
         2005년 충남 천안으로 자리를 옮겨, 40년 가까이 인쇄의 길을 걸어왔습니다.</p>
         <p>오랫동안 C&amp;P는 Copy &amp; Print였습니다.<br />
         2021년, 박물관과 미술관에서 전시를 기획해 온 딸이 가업을 이어받으며<br />
         그 이름에 새로운 의미를 더했습니다.</p>
-        <p>전시를 기획해 온 경험은 씨앤피시스템의 디자인 철학으로 이어집니다.<br />
+        <p>전시를 기획하며 얻은 시선은 씨앤피시스템의 디자인 철학으로 이어집니다.<br />
         전시가 관람객을 향하듯,<br />
         인쇄물 역시 그것을 마주할 사람을 향해야 합니다.</p>
-        <p>무엇을 만들 것인가 보다, 무엇을 전할 것인가.<br />
+        <p>무엇을 만들 것인가보다, 무엇을 전할 것인가.<br class="keep" />
         이 질문에서 우리의 디자인은 시작됩니다.</p>
         <p>이제 C&amp;P의 C는 <strong class="ci-orange">Creative</strong>입니다.</p>
         <p>씨앤피시스템은 기획과 디자인, 인쇄와 제작을 아우릅니다.<br />
-        각 분야의 전문 파트너와 협력하여 목적에 맞는 방식으로, 필요한 만큼 완성합니다.</p>
+        각 분야의 전문 파트너와 함께 목적에 맞는 방식으로, 필요한 만큼 완성합니다.</p>
       </div>
     </section>
 
