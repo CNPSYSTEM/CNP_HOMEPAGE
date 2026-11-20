@@ -1,0 +1,278 @@
+/* C&P SYSTEM — 공개 사이트 스크립트 (대문↔목록 전환 · 목록 위치 기억 · 견적문의 폼) */
+(function () {
+  "use strict";
+  var html = document.documentElement;
+  html.classList.add("js");
+
+  /* =========================================================
+     1. 대문 → 포트폴리오 목록 : 한 화면 단위 전환
+     ========================================================= */
+  var panel = document.getElementById("works");
+  var hero = document.getElementById("hero");
+  if (document.body.classList.contains("home") && panel && hero) initStage();
+
+  function initStage() {
+    var KEY = "cnp:home";
+    var stage = "hero";
+    var locked = false, lockMin = 0, lockMax = 0, lastWheel = 0;
+    var DURATION = matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 750;
+    var QUIET = 180; // 휠 입력이 이만큼(ms) 끊겨야 새 동작으로 봄 → 트랙패드 관성 차단
+
+    function setStage(next, instant) {
+      if (instant) html.classList.add("no-anim");
+      stage = next;
+      html.dataset.stage = next;
+      if (next === "hero") panel.scrollTop = 0;
+      if (instant) { void panel.offsetHeight; html.classList.remove("no-anim"); }
+    }
+    function lock() {
+      var now = performance.now();
+      locked = true; lockMin = now + DURATION + 60; lockMax = lockMin + 1800;
+    }
+    function enter() { if (stage === "list") return; setStage("list"); lock(); }
+    function leave() { if (stage === "hero") return; setStage("hero"); lock(); }
+
+    window.addEventListener("wheel", function (e) {
+      if (e.ctrlKey) return; // 확대/축소
+      var now = performance.now();
+      var gap = now - lastWheel;
+      lastWheel = now;
+      if (locked) {
+        // 전환 중이거나, 전환 뒤에도 같은 휠/관성이 이어지는 동안은 모두 버림
+        if (now < lockMin || (gap < QUIET && now < lockMax)) { e.preventDefault(); return; }
+        locked = false;
+      }
+      if (stage === "hero") {
+        e.preventDefault();
+        if (e.deltaY > 0) enter();
+        return;
+      }
+      if (panel.scrollTop <= 0 && e.deltaY < 0) {
+        e.preventDefault();
+        if (gap >= QUIET) leave(); // 목록을 올리던 관성으로는 대문으로 넘어가지 않음
+      }
+    }, { passive: false });
+
+    window.addEventListener("keydown", function (e) {
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+      var t = e.target;
+      if (t && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
+      if (stage === "hero" && ["ArrowDown", "PageDown", " ", "End"].indexOf(e.key) > -1) {
+        if (e.key === " " && t && /^(A|BUTTON)$/.test(t.tagName)) return;
+        e.preventDefault(); enter();
+      } else if (stage === "list" && panel.scrollTop <= 0 && ["ArrowUp", "PageUp", "Home"].indexOf(e.key) > -1) {
+        e.preventDefault(); leave();
+      }
+    });
+
+    // 터치: 대문에서 위로 스와이프 → 목록 / 목록 맨 위에서 아래로 당김 → 대문
+    var ty = null, tAtTop = false;
+    window.addEventListener("touchstart", function (e) {
+      if (e.touches.length !== 1) { ty = null; return; }
+      ty = e.touches[0].clientY;
+      tAtTop = panel.scrollTop <= 0;
+    }, { passive: true });
+    window.addEventListener("touchmove", function (e) {
+      if (stage === "hero" && e.cancelable) e.preventDefault(); // 대문은 화면에 고정
+    }, { passive: false });
+    window.addEventListener("touchend", function (e) {
+      if (ty === null || locked && performance.now() < lockMin) return;
+      var dy = e.changedTouches[0].clientY - ty;
+      ty = null;
+      if (stage === "hero" && dy < -36) enter();
+      else if (stage === "list" && tAtTop && panel.scrollTop <= 0 && dy > 72) leave();
+    }, { passive: true });
+
+    // 클릭·키보드 포커스
+    var next = hero.querySelector(".hero-next");
+    if (next) next.addEventListener("click", function (e) { e.preventDefault(); enter(); panel.focus({ preventScroll: true }); });
+    panel.setAttribute("tabindex", "-1");
+    panel.addEventListener("focusin", function () { if (stage === "hero") enter(); });
+    var logo = document.querySelector(".site-header .logo");
+    if (logo) logo.addEventListener("click", function (e) { if (stage === "list") { e.preventDefault(); leave(); } });
+
+    // 목록에서 보던 위치 기억 (작품 상세 → 뒤로)
+    function save() {
+      try { sessionStorage.setItem(KEY, JSON.stringify({ stage: stage, top: panel.scrollTop })); } catch (_) {}
+    }
+    function restore() {
+      var nav = performance.getEntriesByType && performance.getEntriesByType("navigation")[0];
+      var back = nav && nav.type === "back_forward";
+      var saved = null;
+      try { saved = JSON.parse(sessionStorage.getItem(KEY) || "null"); } catch (_) {}
+      if (back && saved && saved.stage === "list") {
+        setStage("list", true);
+        var top = saved.top || 0;
+        panel.scrollTop = top;
+        // 사진이 늦게 뜨며 높이가 바뀌어도 위치 유지
+        requestAnimationFrame(function () { panel.scrollTop = top; });
+        window.addEventListener("load", function () { panel.scrollTop = top; }, { once: true });
+      } else if (location.hash === "#works") {
+        setStage("list", true);
+      } else {
+        setStage("hero", true);
+      }
+    }
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    window.addEventListener("pagehide", save);
+    panel.addEventListener("click", function (e) { if (e.target.closest && e.target.closest("a")) save(); });
+    window.addEventListener("pageshow", function (e) { if (e.persisted) { /* bfcache: 상태 그대로 */ } });
+    restore();
+  }
+
+  /* =========================================================
+     2. 작품 상세 : "목록" 을 누르면 보던 위치로 돌아가기
+     ========================================================= */
+  document.querySelectorAll("a[data-back]").forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      var ref = document.referrer;
+      if (!ref || history.length < 2) return;
+      try {
+        var u = new URL(ref);
+        if (u.origin === location.origin && (u.pathname === "/" || u.pathname === "/portfolio/" || u.pathname === "/index.html")) {
+          e.preventDefault(); history.back();
+        }
+      } catch (_) {}
+    });
+  });
+
+  /* =========================================================
+     3. 견적문의 폼
+     ========================================================= */
+  var form = document.getElementById("quote-form");
+  if (form) initQuote();
+
+  function initQuote() {
+    var cfg = window.CNP_CONFIG || {};
+    var errBox = document.getElementById("quote-error");
+    var done = document.getElementById("quote-done");
+    var submit = document.getElementById("quote-submit");
+    var fileInput = document.getElementById("q-files");
+    var fileList = document.getElementById("q-files-list");
+    var refBox = document.getElementById("work-ref");
+    var refLink = document.getElementById("work-ref-link");
+    var work = null;
+
+    // 작품 상세에서 넘어온 경우: 참고 작품 자동 연결 (공개 작품 목록에 있는 것만)
+    var slug = new URLSearchParams(location.search).get("work");
+    if (slug && /^[a-z0-9-]{1,60}$/.test(slug)) {
+      fetch("/data/site.json", { cache: "no-cache" }).then(function (r) { return r.json(); }).then(function (d) {
+        var w = (d.works || []).filter(function (x) { return x.slug === slug; })[0];
+        if (!w) return;
+        work = { slug: w.slug, title: w.title };
+        refLink.textContent = w.title;
+        refLink.href = "/portfolio/" + w.slug + "/";
+        refBox.hidden = false;
+      }).catch(function () {});
+    }
+    document.getElementById("work-ref-remove").addEventListener("click", function () {
+      work = null; refBox.hidden = true;
+      history.replaceState(null, "", location.pathname);
+    });
+
+    function fmtSize(n) { return n >= 1048576 ? (n / 1048576).toFixed(1) + "MB" : Math.max(1, Math.round(n / 1024)) + "KB"; }
+    function checkFiles() {
+      var files = Array.prototype.slice.call(fileInput.files || []);
+      fileList.innerHTML = "";
+      var total = 0, bad = null;
+      files.forEach(function (f) {
+        total += f.size;
+        var ext = (f.name.split(".").pop() || "").toLowerCase();
+        if ((cfg.allowedExt || []).indexOf(ext) < 0) bad = "첨부할 수 없는 형식입니다: " + f.name;
+        var li = document.createElement("li");
+        li.textContent = f.name + " (" + fmtSize(f.size) + ")";
+        fileList.appendChild(li);
+      });
+      if (!bad && files.length > (cfg.maxFiles || 5)) bad = "파일은 최대 " + (cfg.maxFiles || 5) + "개까지 첨부할 수 있습니다.";
+      if (!bad && total > (cfg.maxTotalBytes || 15728640)) bad = "첨부 파일 합계가 15MB를 넘습니다. (현재 " + fmtSize(total) + ")";
+      return bad;
+    }
+    fileInput.addEventListener("change", function () { var bad = checkFiles(); setFieldMsg(fileInput, bad); });
+
+    function setFieldMsg(input, msg) {
+      var field = input.closest(".field");
+      var old = field.querySelector(".field-msg");
+      if (old) old.remove();
+      field.classList.toggle("is-invalid", !!msg);
+      input.setAttribute("aria-invalid", msg ? "true" : "false");
+      if (msg) {
+        var p = document.createElement("p");
+        p.className = "field-msg"; p.textContent = msg;
+        field.appendChild(p);
+      }
+    }
+    function validate() {
+      var first = null;
+      var rules = [
+        ["q-name", "담당자명을 입력해 주세요."],
+        ["q-org", "회사·기관명을 입력해 주세요. 개인이면 '개인'이라고 적어 주세요."],
+        ["q-phone", "연락처(전화번호)를 입력해 주세요."],
+        ["q-email", "회신받을 이메일을 입력해 주세요."],
+        ["q-item", "제작 품목을 입력해 주세요."],
+        ["q-qty", "예상 수량을 입력해 주세요."]
+      ];
+      rules.forEach(function (r) {
+        var el = document.getElementById(r[0]);
+        var v = el.value.trim(), msg = "";
+        if (!v) msg = r[1];
+        else if (r[0] === "q-email" && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) msg = "이메일 주소 형식을 확인해 주세요.";
+        else if (r[0] === "q-phone" && v.replace(/\D/g, "").length < 8) msg = "전화번호를 확인해 주세요.";
+        setFieldMsg(el, msg);
+        if (msg && !first) first = el;
+      });
+      var bad = checkFiles();
+      setFieldMsg(fileInput, bad);
+      if (bad && !first) first = fileInput;
+      if (first) first.focus();
+      return !first;
+    }
+    function readFile(f) {
+      return new Promise(function (resolve, reject) {
+        var fr = new FileReader();
+        fr.onload = function () { resolve({ name: f.name, type: f.type || "application/octet-stream", b64: String(fr.result).split(",")[1] || "" }); };
+        fr.onerror = function () { reject(new Error("파일을 읽지 못했습니다: " + f.name)); };
+        fr.readAsDataURL(f);
+      });
+    }
+    function showError(msg) {
+      errBox.textContent = msg; errBox.hidden = false;
+      errBox.scrollIntoView({ block: "center", behavior: "smooth" });
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      errBox.hidden = true;
+      if (!validate()) return;
+      if (!cfg.quoteEndpoint) {
+        showError("메일 발송 설정이 아직 연결되지 않아 접수할 수 없습니다. 전화(041-557-3900)로 문의해 주세요. 입력하신 내용은 그대로 남아 있습니다.");
+        return;
+      }
+      var v = function (id) { return document.getElementById(id).value.trim(); };
+      submit.disabled = true; submit.textContent = "보내는 중…";
+      Promise.all(Array.prototype.map.call(fileInput.files || [], readFile)).then(function (files) {
+        var payload = {
+          name: v("q-name"), phone: v("q-phone"), email: v("q-email"), item: v("q-item"), qty: v("q-qty"),
+          org: v("q-org"), due: v("q-due"), notes: v("q-notes"),
+          website: form.elements.website.value,
+          workSlug: work ? work.slug : "", workTitle: work ? work.title : "",
+          files: files
+        };
+        // text/plain 으로 보내 사전요청(preflight) 없이 전송 (Apps Script 호환)
+        return fetch(cfg.quoteEndpoint, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) });
+      }).then(function (r) {
+        return r.text().then(function (t) {
+          var d = null; try { d = JSON.parse(t); } catch (_) {}
+          if (!r.ok || !d || d.ok !== true) throw new Error((d && d.message) || "");
+        });
+      }).then(function () {
+        // 실제 발송 성공 응답을 받았을 때만 접수 완료 표시
+        form.hidden = true; done.hidden = false; done.focus();
+        window.scrollTo(0, 0);
+      }).catch(function (err) {
+        showError((err && err.message ? err.message + " " : "전송하지 못했습니다. ") + "입력하신 내용은 그대로 남아 있으니 잠시 뒤 다시 보내기를 눌러 주세요.");
+      }).then(function () {
+        submit.disabled = false; submit.textContent = form.hidden ? "견적 요청 보내기" : (errBox.hidden ? "견적 요청 보내기" : "다시 보내기");
+      });
+    });
+  }
+})();

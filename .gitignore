@@ -1,0 +1,11 @@
+# 비공개 보관함(임시저장·비공개 작품, 전체 내용) — 공개 저장소에 올리지 않음. 비공개 저장소로 따로 올립니다.
+_private/
+# 시험용 대문 사진 — 배포 대상에서 제외 (파일은 남겨 둠)
+media/hero/hero-mwm8fvdo.jpg
+# 미리보기·시험용
+_tools/.preview_password
+_tools/_mailtest/
+_tools/_ghtest/
+_tools/__pycache__/
+*.tmp
+_tools/_captures/

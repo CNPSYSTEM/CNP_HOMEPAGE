@@ -1,0 +1,121 @@
+{
+ "hero": {
+  "image": "media/hero/hero-bookdream.jpg",
+  "w": 1536,
+  "h": 1024,
+  "posPc": [
+   50,
+   50
+  ],
+  "posMo": [
+   50,
+   50
+  ],
+  "scrim": 0,
+  "textColor": "black",
+  "layout": "free",
+  "bg": "#ffffff",
+  "pc": {
+   "x": 76,
+   "y": 53.5,
+   "z": 107,
+   "f": 0
+  },
+  "mo": {
+   "x": 54.8,
+   "y": 37.2,
+   "z": 72,
+   "f": 10
+  }
+ },
+ "works": [
+  {
+   "slug": "sfa-open-house",
+   "title": "SFA AI Robotics Open House",
+   "client": "",
+   "thumb": "/media/works/w001/p1_t.jpg",
+   "fit": "cover",
+   "pos": [
+    50,
+    50
+   ]
+  },
+  {
+   "slug": "yean-kim-genealogy",
+   "title": "예안김씨 세보해설",
+   "client": "",
+   "thumb": "/media/works/w002/p1_t.jpg",
+   "fit": "cover",
+   "pos": [
+    50,
+    50
+   ]
+  },
+  {
+   "slug": "korea-public-forum",
+   "title": "한국 지방 공기업 정책포럼",
+   "client": "",
+   "thumb": "/media/works/w003/p1_t.jpg",
+   "fit": "cover",
+   "pos": [
+    50,
+    50
+   ]
+  },
+  {
+   "slug": "fire-education",
+   "title": "소방안전강사 장애학생지원 역량 강화",
+   "client": "",
+   "thumb": "/media/works/w004/p1_t.jpg",
+   "fit": "cover",
+   "pos": [
+    50,
+    50
+   ]
+  },
+  {
+   "slug": "student-research",
+   "title": "학생탐구활동 연구일지",
+   "client": "",
+   "thumb": "/media/works/w005/p1_t.jpg",
+   "fit": "cover",
+   "pos": [
+    50,
+    50
+   ]
+  },
+  {
+   "slug": "hahm-ensemble",
+   "title": "더함앙상블",
+   "client": "",
+   "thumb": "/media/works/w006/p1_t.jpg",
+   "fit": "cover",
+   "pos": [
+    50,
+    50
+   ]
+  },
+  {
+   "slug": "bookdream",
+   "title": "책드림, 행복드림",
+   "client": "천안시 도서관",
+   "thumb": "/media/works/w007/p1_t.jpg",
+   "fit": "cover",
+   "pos": [
+    50,
+    50
+   ]
+  },
+  {
+   "slug": "life-theater",
+   "title": "인생극장 제1막",
+   "client": "",
+   "thumb": "/media/works/w008/p1_t.jpg",
+   "fit": "cover",
+   "pos": [
+    50,
+    50
+   ]
+  }
+ ]
+}

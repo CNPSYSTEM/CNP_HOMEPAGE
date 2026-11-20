@@ -1,44 +1,73 @@
-# C&P SYSTEM Homepage — V1 (Phase 1)
+# 씨앤피시스템 홈페이지 — 리뉴얼 v1 (2026-11-18)
 
-설계 기준 문서: `../CNP_HOMEPAGE_V1_BLUEPRINT.md`
+사진 중심 · 여백 · 간결한 메뉴. 서버 없이 GitHub Pages(cnpsystem.kr)에서 그대로 돌아가는 정적 사이트입니다.
 
-## 실행 방법
-
-정적 사이트이지만 `data/*.json`을 `fetch`로 불러오므로 브라우저 보안 정책(CORS)상
-`index.html`을 더블클릭해서 여는 방식(`file://`)은 동작하지 않습니다. 아래처럼
-로컬 서버로 실행하세요.
+## 미리보기 켜기 (내 컴퓨터)
 
 ```bash
-cd CNP_Homepage_V1
-python3 -m http.server 8080
+python _tools/preview_server.py
 ```
 
-이후 브라우저에서 `http://localhost:8080` 접속.
+- 사이트: http://localhost:8790/
+- 관리자: http://localhost:8790/admin/ — 비밀번호는 `_tools/.preview_password` 파일에 있습니다.
 
-## 현재 상태 (Phase 1)
+## 주소
 
-- 구조: 헤더, 히어로, OUR VALUE, ABOUT, WORK, CAPABILITY, CLIENTS(숨김), CONTACT, 푸터 — 블루프린트 5~13절 순서 그대로 구현.
-- 스타일: 기본 반응형(모바일/태블릿/데스크톱/와이드) 레이아웃, 다크·warm-white 리듬 적용. 세부 타이포/그리드/모션 다듬기는 Phase 2에서 진행.
-- 데이터: `data/portfolio.json`, `data/clients.json`, `data/capability.json`로 분리 — 레이아웃 코드를 건드리지 않고 콘텐츠만 교체 가능.
+| 메뉴 | 주소 |
+|---|---|
+| 대문 + 포트폴리오 목록 | `/` |
+| 회사소개 | `/about/` |
+| 포트폴리오 | `/portfolio/` |
+| 작품 상세 | `/portfolio/작품주소/` |
+| 견적문의 | `/contact/` (작품에서 들어오면 `?work=작품주소`) |
+| 안내 | `/guide/` |
+| 관리자 | `/admin/` (검색 제외) |
 
-## 플레이스홀더 — 실제 데이터로 교체 전까지 유지
+## 관리자에서 사진 한 장 바꾸기
 
-| 항목 | 위치 | 상태 |
-|---|---|---|
-| 히어로/About 이미지 | `index.html` 내 `.image-placeholder` | 실제 사진 없음. CSS 패턴 placeholder만 사용 (외부 이미지 다운로드 없음) |
-| 포트폴리오 프로젝트 6건 | `data/portfolio.json` | `placeholder-01`~`06`, 중립 명칭만 사용. 실제 기관/프로젝트명 아님 |
-| 거래 기관(Clients) | `data/clients.json` | 빈 배열. 검증 전까지 CLIENTS 섹션 및 네비 항목 자동 숨김 |
-| Capability 항목 | `data/capability.json` | 디자인·인쇄·제본·후가공·대형출력만 노출(`verified: true`). 견적서 발행/세금계산서 발행/카드결제는 사실 확인 전까지 `verified: false`로 비노출 |
-| 이메일/전화/주소/사업자등록번호 | `index.html` footer, contact 섹션 | `[VERIFY: ...]` 로 표기, 확인 전까지 임의 값 금지 |
-| 카카오톡 채널 링크 | `index.html` contact 섹션 | `[VERIFY: 카카오톡 채널 링크 필요]` |
+- **대문 사진**: 관리자 → `대문 사진` → `사진 바꾸기` → PC·모바일 미리보기에서 사진을 끌어 초점 맞춤 → `글자 뒤 어둡게`로 문구 가독성 확인 → `저장하고 사이트에 반영`
+- **작품 사진**: 관리자 → `포트폴리오` → 작품 사진 누르기 → 사진 올리기/삭제/순서/대표 선택 → `저장`
 
-## 폰트
+## 폴더 구조
 
-번들 폰트 파일 없음. 현재는 시스템 폰트 스택(`--font-sans`, `css/styles.css`)만 사용합니다.
-합법적으로 사용 가능한 한글 웹폰트(예: Pretendard, OFL 라이선스)를 채택하기로 결정하면
-`index.html` 상단 주석의 CDN 링크를 해제하고 `--font-sans` 값만 교체하면 됩니다 — 폰트 파일을
-저장소에 저장할 필요가 없습니다.
+| 위치 | 내용 |
+|---|---|
+| `index.html`, `about/`, `portfolio/`, `contact/`, `guide/`, `404.html` | 공개 페이지 |
+| `portfolio/작품주소/index.html` | 작품 상세 (관리자가 자동으로 만들고 지움) |
+| `media/` | 공개 중인 사진 (대문, 작품) |
+| `data/site.json`, `sitemap.xml` | 공개 작품 목록, 사이트맵 (관리자가 자동 갱신) |
+| `_private/` | **비공개 보관함** — 전체 내용(`content.json`)과 임시저장·비공개 작품 사진. 공개 저장소에 올리지 않음(.gitignore). 운영에서는 비공개 저장소 `CNP_HOMEPAGE_PRIVATE` 에 저장 |
+| `_templates/work.html` | 작품 상세 틀 |
+| `_tools/` | 미리보기 서버, 가짜 GitHub 시험 서버, 페이지 틀 도구, 메일 발송 스크립트, `설정_안내.md` |
+| `admin/` | 관리자 화면 |
 
-## 다음 (Phase 2)
+`_` 로 시작하는 폴더는 GitHub Pages 가 사이트로 내보내지 않습니다(그래서 `.nojekyll` 파일을 만들면 안 됩니다).
 
-타이포그래피/그리드/스페이싱 디테일, 다크·라이트 리듬 다듬기, 호버 상태, 절제된 모션 보강.
+## 관리자 시험 (운영·실제 GitHub 와 분리)
+
+```bash
+python _tools/test_github_server.py
+```
+
+http://localhost:8792/admin/ (열쇠 `test-token-1`). 임시 폴더에 진짜 git 저장소 두 개(공개·보관함)를 만들어 운영과 같은 저장 방식으로 시험합니다. 이 폴더 파일은 바꾸지 않습니다.
+
+## 회사소개 · 안내 문구 쓰기
+
+`about/index.html`, `guide/index.html` 안의 `▼ … 본문` 표시 사이를 고치면 됩니다.
+메뉴·바닥글을 바꿀 때는 `_tools/scaffold.py` 를 고친 뒤 `python _tools/scaffold.py` 를 실행합니다(작품 목록·대문 부분은 보존).
+
+## 운영 반영 전에 필요한 설정
+
+`_tools/설정_안내.md` 에 대표님이 직접 하실 단계만 정리했습니다.
+
+1. 비공개 보관함 저장소 `CNP_HOMEPAGE_PRIVATE` 만들기
+2. 관리자 열쇠(토큰) 만들기 — 두 저장소에 Contents: Read and write
+3. 견적 메일 발송 — `_tools/apps_script_quote.gs` 를 업무용 구글 계정의 Apps Script 에 올리고, 나온 주소를 `js/config.js` 의 `PRODUCTION_QUOTE_ENDPOINT` 에 넣기
+
+배포 때 올리는 곳: 이 폴더(공개 대상만) → `CNP_HOMEPAGE`, `_private/` 내용 → `CNP_HOMEPAGE_PRIVATE`.
+배포 제외: `_private/`, `media/hero/hero-mwm8fvdo.jpg`(시험 사진), 미리보기 비밀번호·시험 메일 파일 (.gitignore).
+
+## 이전 버전(v1) 복구
+
+- 저장소 태그 `v1-backup-20261118` (커밋 2ca7e8d)
+- 보관 파일 `클로드\CNP_HOMEPAGE_v1_보관_20261118.zip`
