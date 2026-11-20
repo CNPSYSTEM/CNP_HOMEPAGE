@@ -40,6 +40,33 @@
  ],
  "works": [
   {
+   "id": "w4qlnj5xn",
+   "slug": "w261120-fd0",
+   "title": "소방특수",
+   "status": "public",
+   "client": "국립특수교육원",
+   "category": "책자·도서",
+   "desc": "",
+   "specs": [],
+   "photos": [
+    {
+     "id": "ptjp6zx",
+     "w": 2000,
+     "h": 1333,
+     "tw": 900,
+     "th": 600
+    }
+   ],
+   "cover": "ptjp6zx",
+   "thumbFit": "cover",
+   "thumbPos": [
+    50,
+    50
+   ],
+   "created": "2026-11-20",
+   "updated": "2026-11-20"
+  },
+  {
    "id": "w001",
    "slug": "sfa-open-house",
    "title": "SFA AI Robotics Open House",
@@ -285,6 +312,7 @@
   }
  ],
  "order": [
+  "w4qlnj5xn",
   "w001",
   "w002",
   "w003",

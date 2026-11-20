@@ -30,6 +30,17 @@
  },
  "works": [
   {
+   "slug": "w261120-fd0",
+   "title": "소방특수",
+   "client": "국립특수교육원",
+   "thumb": "/media/works/w4qlnj5xn/ptjp6zx_t.jpg",
+   "fit": "cover",
+   "pos": [
+    50,
+    50
+   ]
+  },
+  {
    "slug": "sfa-open-house",
    "title": "SFA AI Robotics Open House",
    "client": "SFA 에스에프에이",
