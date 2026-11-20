@@ -30,6 +30,17 @@
  },
  "works": [
   {
+   "slug": "w261120-9ok",
+   "title": "또담, 네 마음에 닿기를",
+   "client": "천안시 청소년상담복지센터",
+   "thumb": "/media/works/woqxxg9uw/peiyflz_t.jpg",
+   "fit": "cover",
+   "pos": [
+    50,
+    50
+   ]
+  },
+  {
    "slug": "w261120-6rr",
    "title": "임산부의 날 기념음악회 280일의 기적",
    "client": "더함앙상블",
