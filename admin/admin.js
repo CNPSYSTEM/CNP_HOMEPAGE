@@ -80,7 +80,7 @@
   //   "_private/…" 로 시작하는 경로 → 비공개 저장소 (임시저장·비공개 작품 사진, 전체 내용 content.json)
   //   그 밖의 경로               → 공개 저장소 (GitHub Pages 로 나가는 사이트 파일)
   function route(path) {
-    if (path.indexOf("_private/") === 0) return { repo: CFG.privateRepo, branch: CFG.privateBranch || "main", path: path.slice(9), priv: true };
+    if (CFG.privateRepo && path.indexOf("_private/") === 0) return { repo: CFG.privateRepo, branch: CFG.privateBranch || "main", path: path.slice(9), priv: true };
     return { repo: CFG.repo, branch: CFG.branch || "main", path: path, priv: false };
   }
   function blobToB64(blob) {
@@ -113,7 +113,7 @@
           if (!(d.permissions && d.permissions.push)) throw new Error(label + "(" + repo + ")에 쓸 권한이 없습니다. 열쇠의 저장소 선택과 Contents: Read and write 권한을 확인해 주세요.");
         }, function (e) { throw e.expired ? e : new Error(label + "(" + repo + ")를 열 수 없습니다. 열쇠에 이 저장소가 포함되어 있는지 확인해 주세요."); });
       }
-      return canPush(CFG.repo, "사이트 저장소").then(function () { return canPush(CFG.privateRepo, "비공개 보관함 저장소"); })
+      return canPush(CFG.repo, "사이트 저장소").then(function () { return CFG.privateRepo ? canPush(CFG.privateRepo, "비공개 보관함 저장소") : null; })
         .then(function () { return true; }, function (e) { self.lastError = e.message; return false; });
     },
     login: function (token) {
@@ -188,7 +188,7 @@
         // 사이트(공개) 먼저, 보관함(내용 기록) 나중 — 비공개로 내릴 때 사이트에서 먼저 사라지도록
         return self._commitRepo(CFG.repo, CFG.branch || "main", pub, message);
       }).then(function () {
-        return self._commitRepo(CFG.privateRepo, CFG.privateBranch || "main", priv, message);
+        return CFG.privateRepo ? self._commitRepo(CFG.privateRepo, CFG.privateBranch || "main", priv, message) : null;
       });
     }
   };
@@ -442,7 +442,7 @@
       LOCAL_MODE ? h("details", {}, h("summary", { text: "비밀번호는 어디에 있나요?" }), h("p", { text: "미리보기 서버를 켠 폴더의 _tools/.preview_password 파일에 적혀 있습니다." }))
         : h("details", {}, h("summary", { text: "열쇠(토큰) 만드는 방법" }), h("ul", {},
           h("li", { text: "GitHub 로그인 → Settings → Developer settings → Fine-grained tokens → Generate new token" }),
-          h("li", { text: "Repository access: Only select repositories → " + CFG.repo + " 와 " + CFG.privateRepo + " 두 개 선택" }),
+          h("li", { text: "Repository access: Only select repositories → " + CFG.repo + (CFG.privateRepo ? " 와 " + CFG.privateRepo + " 두 개 선택" : " 선택") }),
           h("li", { text: "Permissions → Contents: Read and write" }),
           h("li", { text: "만들어진 github_pat_… 값을 위 칸에 붙여 넣기" })))
     );
@@ -670,7 +670,7 @@
           h("button", { class: "btn", type: "button", text: "＋ 새 작품", onclick: function () { if (guardLeave()) renderEditor(null); } }))),
       h("p", { class: "sec-title" }, "공개 중 ", h("small", { text: order.length + "개 · 사이트 목록과 같은 순서 (PC 4열 미리보기) · 끌어서 순서 변경, 사진을 누르면 편집" })),
       order.length ? grid : h("p", { class: "empty", text: "공개 중인 작품이 없습니다." }),
-      h("p", { class: "sec-title" }, "임시저장 ", h("small", { text: nDraft + "개 · 아직 공개하지 않은 작품" })),
+      h("p", { class: "sec-title" }, "임시저장 ", h("small", { text: nDraft + "개 · 아직 사이트에 올리지 않은 작품" + (LOCAL_MODE || CFG.privateRepo ? "" : " (저장소에는 올라가므로 공개해도 되는 사진만)") })),
       smallList("draft", "임시저장한 작품이 없습니다."),
       h("p", { class: "sec-title" }, "비공개 ", h("small", { text: nPriv + "개 · 사진과 내용은 보관, 사이트에서는 보이지 않음" })),
       smallList("private", "비공개로 내린 작품이 없습니다."),
@@ -874,7 +874,7 @@
     store.readText(CONTENT_PATH).then(function (t) {
       // 운영에서 보관함에 내용 파일이 없으면 멈춘다(빈 내용으로 저장해 사이트 목록이 지워지는 일을 막음)
       if (!t && !LOCAL_MODE) {
-        app.replaceChildren(h("p", { class: "loading", text: "비공개 보관함 저장소에 내용 파일(content.json)이 없습니다. 보관함 준비가 끝난 뒤 다시 열어 주세요." }));
+        app.replaceChildren(h("p", { class: "loading", text: "저장소에 내용 파일(_private/content.json)이 없어 관리자를 열 수 없습니다." }));
         return;
       }
       content = t ? JSON.parse(t) : emptyContent();

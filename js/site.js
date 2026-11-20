@@ -15,22 +15,78 @@
     var KEY = "cnp:home";
     var stage = "hero";
     var locked = false, lockMin = 0, lockMax = 0, lastWheel = 0;
-    var DURATION = matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 750;
+    var REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var DURATION = REDUCED ? 0 : 750;   // 대문 ↔ 첫 슬라이드
+    var STEP = REDUCED ? 0 : 620;       // 슬라이드 ↔ 슬라이드
     var QUIET = 180; // 휠 입력이 이만큼(ms) 끊겨야 새 동작으로 봄 → 트랙패드 관성 차단
+    var narrow = matchMedia("(max-width: 899px)");
+    var anim = null, prevTop = 0;
+
+    // 한 화면씩 넘어가는 구간(슬라이드). 마지막(포트폴리오)부터는 일반 스크롤
+    //   휴대폰 : 씨앤피는 다릅니다 → 서비스 분야 → 포트폴리오
+    //   컴퓨터 : (씨앤피는 다릅니다 + 서비스 분야) → 포트폴리오
+    function slides() {
+      var secs = panel.querySelectorAll(".home-intro .home-sec");
+      var list = narrow.matches ? [secs[0], secs[1], panel.querySelector(".home-works")]
+                                : [panel.querySelector(".home-intro"), panel.querySelector(".home-works")];
+      return list.filter(Boolean);
+    }
+    function headerH() { var h = document.querySelector(".site-header"); return h ? h.getBoundingClientRect().height : 0; }
+    function points() {
+      var pr = panel.getBoundingClientRect().top, hh = headerH();
+      return slides().map(function (el) { return Math.max(0, Math.round(el.getBoundingClientRect().top - pr + panel.scrollTop - hh)); });
+    }
+    function lastPoint() { var p = points(); return p.length ? p[p.length - 1] : 0; }
 
     function setStage(next, instant) {
       if (instant) html.classList.add("no-anim");
       stage = next;
       html.dataset.stage = next;
-      if (next === "hero") panel.scrollTop = 0;
+      if (next === "hero") { panel.scrollTop = 0; prevTop = 0; }
       if (instant) { void panel.offsetHeight; html.classList.remove("no-anim"); }
     }
-    function lock() {
+    function lock(ms) {
       var now = performance.now();
-      locked = true; lockMin = now + DURATION + 60; lockMax = lockMin + 1800;
+      locked = true; lockMin = now + ms + 60; lockMax = lockMin + 1800;
     }
-    function enter() { if (stage === "list") return; setStage("list"); lock(); }
-    function leave() { if (stage === "hero") return; setStage("hero"); lock(); }
+    function enter() { if (stage === "list") return; setStage("list"); lock(DURATION); }
+    function leave() { if (stage === "hero") return; setStage("hero"); lock(DURATION); }
+
+    function animateTo(target, ms) {
+      target = Math.max(0, Math.min(Math.round(target), panel.scrollHeight - panel.clientHeight));
+      if (anim) cancelAnimationFrame(anim.raf);
+      anim = null;
+      lock(ms);
+      if (!ms) { panel.scrollTop = target; prevTop = target; return; }
+      var from = panel.scrollTop, t0 = performance.now();
+      anim = { raf: 0 };
+      function tick(now) {
+        var k = Math.min(1, (now - t0) / ms);
+        var e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+        panel.scrollTop = from + (target - from) * e; prevTop = panel.scrollTop;
+        if (k < 1) anim.raf = requestAnimationFrame(tick); else anim = null;
+      }
+      anim.raf = requestAnimationFrame(tick);
+    }
+    // dir: +1 다음 화면, -1 이전 화면. 처리했으면 true (false 면 일반 스크롤에 맡김)
+    function step(dir) {
+      var p = points(), last = p[p.length - 1] || 0, top = panel.scrollTop;
+      var vh = panel.clientHeight - headerH();
+      if (dir > 0) {
+        if (top >= last - 1) return false;
+        var next = p.filter(function (v) { return v > top + 1; })[0];
+        // 화면보다 긴 슬라이드는 그 안에서 한 쪽씩 넘긴 뒤 다음으로
+        var target = (next - top > vh + 8) ? Math.min(top + vh * 0.85, next - vh) : next;
+        if (target <= top + 1) target = next;
+        animateTo(target, STEP); return true;
+      }
+      if (top > last + 1) return false;
+      if (top <= 0) { leave(); return true; }
+      var before = p.filter(function (v) { return v < top - 1; });
+      var prev = before.length ? before[before.length - 1] : 0;
+      animateTo((top - prev > vh + 8) ? Math.max(top - vh * 0.85, prev) : prev, STEP);
+      return true;
+    }
 
     window.addEventListener("wheel", function (e) {
       if (e.ctrlKey) return; // 확대/축소
@@ -47,40 +103,65 @@
         if (e.deltaY > 0) enter();
         return;
       }
-      if (panel.scrollTop <= 0 && e.deltaY < 0) {
+      var last = lastPoint(), top = panel.scrollTop;
+      if (e.deltaY > 0) {
+        if (top < last - 1) { e.preventDefault(); step(1); }
+        return;                                   // 포트폴리오부터는 일반 스크롤
+      }
+      if (e.deltaY < 0 && top <= last + 1) {
         e.preventDefault();
-        if (gap >= QUIET) leave(); // 목록을 올리던 관성으로는 대문으로 넘어가지 않음
+        if (top > last - 1 && gap < QUIET) return;  // 목록을 올리던 관성으로는 앞 화면으로 넘어가지 않음
+        step(-1);
       }
     }, { passive: false });
+
+    // 포트폴리오를 위로 훑다가 관성으로 앞 슬라이드까지 밀려 들어가지 않게, 포트폴리오 맨 위에서 멈춤
+    panel.addEventListener("scroll", function () {
+      var top = panel.scrollTop;
+      if (!anim && stage === "list") {
+        var last = lastPoint();
+        if (prevTop >= last - 1 && top < last - 1) { panel.scrollTop = last; top = last; lock(0); }
+      }
+      prevTop = top;
+    });
 
     window.addEventListener("keydown", function (e) {
       if (e.altKey || e.ctrlKey || e.metaKey) return;
       var t = e.target;
       if (t && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
-      if (stage === "hero" && ["ArrowDown", "PageDown", " ", "End"].indexOf(e.key) > -1) {
-        if (e.key === " " && t && /^(A|BUTTON)$/.test(t.tagName)) return;
-        e.preventDefault(); enter();
-      } else if (stage === "list" && panel.scrollTop <= 0 && ["ArrowUp", "PageUp", "Home"].indexOf(e.key) > -1) {
-        e.preventDefault(); leave();
+      var down = ["ArrowDown", "PageDown", " "].indexOf(e.key) > -1, up = ["ArrowUp", "PageUp"].indexOf(e.key) > -1;
+      if (e.key === " " && t && /^(A|BUTTON)$/.test(t.tagName)) return;
+      if (stage === "hero") {
+        if (down || e.key === "End") { e.preventDefault(); enter(); }
+        return;
       }
+      if (locked && performance.now() < lockMin) { if (down || up) e.preventDefault(); return; }
+      var last = lastPoint(), top = panel.scrollTop;
+      if (down && top < last - 1) { e.preventDefault(); step(1); }
+      else if ((up && top <= last + 1) || (e.key === "Home" && top <= 0)) { e.preventDefault(); step(-1); }
     });
 
-    // 터치: 대문에서 위로 스와이프 → 목록 / 목록 맨 위에서 아래로 당김 → 대문
-    var ty = null, tAtTop = false;
+    // 터치: 대문·슬라이드 구간에서는 한 번 쓸어 넘기면 한 화면씩 이동
+    var ty = null, zone = "";
     window.addEventListener("touchstart", function (e) {
       if (e.touches.length !== 1) { ty = null; return; }
       ty = e.touches[0].clientY;
-      tAtTop = panel.scrollTop <= 0;
+      var top = panel.scrollTop, last = lastPoint();
+      zone = stage === "hero" ? "hero" : (top < last - 1 ? "slides" : (top <= last + 1 ? "edge" : "free"));
     }, { passive: true });
     window.addEventListener("touchmove", function (e) {
-      if (stage === "hero" && e.cancelable) e.preventDefault(); // 대문은 화면에 고정
+      if (ty === null || !e.cancelable) return;
+      if (zone === "hero" || zone === "slides") e.preventDefault();               // 화면 고정
+      else if (zone === "edge" && e.touches[0].clientY - ty > 0) e.preventDefault(); // 포트폴리오 맨 위에서 아래로 당김
     }, { passive: false });
     window.addEventListener("touchend", function (e) {
-      if (ty === null || locked && performance.now() < lockMin) return;
+      if (ty === null) return;
       var dy = e.changedTouches[0].clientY - ty;
       ty = null;
-      if (stage === "hero" && dy < -36) enter();
-      else if (stage === "list" && tAtTop && panel.scrollTop <= 0 && dy > 72) leave();
+      if (locked && performance.now() < lockMin) return;
+      if (zone === "hero") { if (dy < -36) enter(); }
+      else if (zone === "slides") { if (dy < -36) step(1); else if (dy > 36) step(-1); }
+      else if (zone === "edge") { if (dy > 36) step(-1); }
     }, { passive: true });
 
     // 클릭·키보드 포커스
@@ -95,6 +176,7 @@
     function save() {
       try { sessionStorage.setItem(KEY, JSON.stringify({ stage: stage, top: panel.scrollTop })); } catch (_) {}
     }
+    function jump(top) { panel.scrollTop = top; prevTop = panel.scrollTop; }
     function restore() {
       var nav = performance.getEntriesByType && performance.getEntriesByType("navigation")[0];
       var back = nav && nav.type === "back_forward";
@@ -103,10 +185,10 @@
       if (back && saved && saved.stage === "list") {
         setStage("list", true);
         var top = saved.top || 0;
-        panel.scrollTop = top;
+        jump(top);
         // 사진이 늦게 뜨며 높이가 바뀌어도 위치 유지
-        requestAnimationFrame(function () { panel.scrollTop = top; });
-        window.addEventListener("load", function () { panel.scrollTop = top; }, { once: true });
+        requestAnimationFrame(function () { jump(top); });
+        window.addEventListener("load", function () { jump(top); }, { once: true });
       } else if (location.hash === "#works") {
         setStage("list", true);
       } else {
@@ -116,7 +198,6 @@
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
     window.addEventListener("pagehide", save);
     panel.addEventListener("click", function (e) { if (e.target.closest && e.target.closest("a")) save(); });
-    window.addEventListener("pageshow", function (e) { if (e.persisted) { /* bfcache: 상태 그대로 */ } });
     restore();
   }
 

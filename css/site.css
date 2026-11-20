@@ -397,6 +397,27 @@ html.js.no-anim .home .panel, html.js.no-anim .site-header { transition: none; }
 .home-intro .about-note { color: var(--ink-soft); }
 .home-works-h { max-width: 1160px; margin-left: auto; margin-right: auto; padding: 0 var(--pad); }
 .home-more { display: flex; justify-content: center; padding: clamp(28px, 5vw, 56px) var(--pad) clamp(8px, 2vw, 16px); }
+/* 홈 슬라이드: 한 화면에 한 장씩 (메뉴 줄 아래 영역을 가득 채움) */
+html.js .home .home-intro,
+html.js .home .home-works { min-height: calc(100vh - var(--header-h)); min-height: calc(100svh - var(--header-h)); }
+html.js .home .home-intro { display: flex; flex-direction: column; justify-content: center; padding-top: clamp(20px, 4vh, 48px); padding-bottom: clamp(20px, 4vh, 48px); }
+html.js .home .home-works { padding-top: clamp(18px, 3vh, 36px); }
+@media (min-width: 900px) {
+  /* 컴퓨터: 강점 + 서비스 분야가 한 화면에 들어가도록 조금 촘촘하게 */
+  html.js .home .home-sec + .home-sec { margin-top: clamp(28px, 5.5vh, 64px); }
+  html.js .home .home-intro .home-h { margin-bottom: clamp(14px, 2.4vh, 26px); }
+  html.js .home .home-intro .about-table th, html.js .home .home-intro .about-table td { padding-top: clamp(7px, 1.2vh, 12px); padding-bottom: clamp(7px, 1.2vh, 12px); }
+  html.js .home .home-intro .about-note { margin-bottom: clamp(10px, 1.6vh, 18px); }
+}
+@media (max-width: 899px) {
+  /* 휴대폰: 강점 / 서비스 분야를 각각 한 화면으로 */
+  html.js .home .home-intro { display: block; min-height: 0; padding-top: 0; padding-bottom: 0; }
+  html.js .home .home-sec {
+    min-height: calc(100vh - var(--header-h)); min-height: calc(100svh - var(--header-h));
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 22px 0; margin-top: 0;
+  }
+}
 /* 홈 포트폴리오는 4줄까지: 모바일(2열)은 8개만 보임 */
 @media (max-width: 899px) {
   .home-works .grid li:nth-child(n+9) { display: none; }
@@ -405,6 +426,10 @@ html.js.no-anim .home .panel, html.js.no-anim .site-header { transition: none; }
 /* ---------- 견적문의 머리 문구 ---------- */
 .contact-intro { margin-bottom: clamp(28px, 5vw, 44px); padding-bottom: clamp(24px, 4vw, 36px); border-bottom: 1px solid var(--line); }
 .contact-intro-text { margin-top: 12px; color: var(--ink-soft); font-size: 1.02rem; line-height: 1.8; }
+
+/* 회사소개 글에서 강조하는 낱말: 로고 주황 */
+.ci-orange { color: var(--accent); font-weight: 700; }
+.about-lead .ci-orange { font-weight: inherit; }
 
 /* ---------- 안내(질문·답) ---------- */
 .qa h2 { display: flex; align-items: baseline; gap: 0.55em; font-size: clamp(1.02rem, 2.6vw, 1.15rem); line-height: 1.5; color: var(--ink); }

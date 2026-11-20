@@ -34,7 +34,7 @@ mimetypes.add_type("application/javascript; charset=utf-8", ".js")
 mimetypes.add_type("text/css; charset=utf-8", ".css")
 
 TEST_CONFIG = """window.CNP_ADMIN = { mode: "github", apiBase: "/fakegh", repo: "TEST/SITE", branch: "main",
-  privateRepo: "TEST/PRIVATE", privateBranch: "main", siteUrl: "https://cnpsystem.kr", testLabel: "관리자 · 가짜 GitHub 시험" };
+  privateRepo: "", privateBranch: "main", siteUrl: "https://cnpsystem.kr", testLabel: "관리자 · 가짜 GitHub 시험" };
 """
 
 

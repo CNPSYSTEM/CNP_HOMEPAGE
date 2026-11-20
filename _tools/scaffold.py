@@ -17,7 +17,7 @@ MENU = [("/about/", "회사소개"), ("/portfolio/", "포트폴리오"),
         ("/contact/", "견적문의"), ("/guide/", "안내")]
 
 
-def head(title, desc, path, og_image=SITE + "/media/og.jpg", noindex=False):
+def head(title, desc, path, og_image=SITE + "/assets/og-logo.png", noindex=False):
     robots = '\n  <meta name="robots" content="noindex" />' if noindex else ""
     canonical = "" if noindex else f'\n  <link rel="canonical" href="{SITE}{path}" />'
     return f"""<!DOCTYPE html>
@@ -69,18 +69,22 @@ SCRIPTS = """  <script src="/js/config.js"></script>
   <script src="/js/site.js"></script>"""
 
 ORG_LD = """  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"LocalBusiness","name":"씨앤피시스템","alternateName":"C&P SYSTEM",
-   "url":"https://cnpsystem.kr/","telephone":"+82-41-557-3900","email":"cnp3900@naver.com",
-   "description":"천안 디자인·인쇄·제작 원스톱 서비스. 디자인부터 인쇄, 제본, 후가공까지 한곳에서 진행합니다.",
+  {"@context":"https://schema.org","@type":"LocalBusiness",
+   "name":"씨앤피시스템 (C&P SYSTEM)","alternateName":["씨앤피시스템","C&P SYSTEM"],
+   "url":"https://cnpsystem.kr/",
+   "logo":"https://cnpsystem.kr/assets/og-logo.png","image":"https://cnpsystem.kr/assets/og-logo.png",
+   "description":"천안 디자인·인쇄 씨앤피시스템. 리플렛·브로슈어·포스터 디자인, 교재·책자 편집디자인, 로고·BI, 패키지·라벨, 주문형 인쇄, 제본, 현수막·배너 대형출력.",
+   "telephone":"+82-41-557-3900","email":"cnp3900@naver.com",
    "address":{"@type":"PostalAddress","addressCountry":"KR","addressRegion":"충청남도","addressLocality":"천안시 서북구","streetAddress":"백석로 10"},
-   "openingHours":"Mo-Fr 09:00-18:30"}
+   "openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"18:30"}]}
   </script>"""
 
-HOME_DESC = "천안 인쇄·디자인 전문 씨앤피시스템. 디자인부터 인쇄, 제본, 후가공까지 좋은 디자인이 좋은 결과물이 되는 과정을 만듭니다."
+HOME_TITLE = "천안 디자인 인쇄소 씨앤피시스템"
+HOME_DESC = "천안 디자인·인쇄 씨앤피시스템 | 리플렛·브로슈어·포스터 디자인 | 교재·책자 편집디자인 | 로고·BI | 패키지·라벨 | 주문형 인쇄 | 제본 | 현수막·배너 대형출력"
 
 PAGES = {}
 
-PAGES["index.html"] = f"""{head("천안 인쇄 디자인 회사 씨앤피시스템", HOME_DESC, "/")}
+PAGES["index.html"] = f"""{head(HOME_TITLE, HOME_DESC, "/")}
 <body class="home">
 {header("/")}
   <main id="main">
@@ -97,7 +101,7 @@ PAGES["index.html"] = f"""{head("천안 인쇄 디자인 회사 씨앤피시스�
     <section class="panel" id="works" aria-label="소개와 포트폴리오">
       <div class="home-intro">
         <section class="home-sec" aria-labelledby="home-strengths">
-          <h2 class="home-h" id="home-strengths">씨앤피의 세 가지 강점</h2>
+          <h2 class="home-h" id="home-strengths">씨앤피는 다릅니다</h2>
           <div class="about-cards">
             <div class="about-card">
               <h3>Creative · 쓰임을 생각하는 디자인</h3>
@@ -170,14 +174,21 @@ PAGES["about/index.html"] = f"""{head("회사소개 | 씨앤피시스템", "1988
 
     <section class="about-intro">
       <p class="about-eyebrow" lang="en">SINCE 1988 · CREATIVE &amp; PRINT SYSTEM</p>
-      <p class="about-lead">Copy에서 Creative로, 인쇄는 그대로 정확하게.</p>
+      <p class="about-lead">Copy에서 Creative로, 인쇄의 경험에 디자인의 시선을 더하다.</p>
       <div class="about-body">
-        <p>1988년 경남 창원의 '경남측기사'에서 시작한 씨앤피시스템은 2005년 충남 천안으로 터전을 옮겨, 40년 가까이 한 길을 걸어왔습니다.</p>
-        <p>긴 시간 C&amp;P는 Copy &amp; Print였습니다. 그리고 2021년, 인쇄 위에 디자인을 더했습니다.</p>
-        <p>박물관, 미술관 학예사로 전시를 기획해 온 오랜 시간이 지금의 디자인에 담겨 있습니다.<br />
-        전시가 보는 사람의 자리에서 완성되듯, 인쇄물도 받아 보는 사람의 손에서 완성됩니다.<br />
-        그래서 먼저 고객이 전하고 싶은 내용은 무엇인지, 받아 보는 사람에게는 어떻게 읽힐지 함께 생각합니다. 이제 C&amp;P의 C는 Creative입니다.</p>
-        <p>기획과 디자인부터 인쇄·제작까지 맡아 진행하며, 작업에 따라 분야별 제작 파트너와 함께 쓰임에 맞는 사양으로 필요한 수량만큼 제작합니다.</p>
+        <p>1988년 경남 창원의 ‘경남측기사’에서 시작된 씨앤피시스템은<br />
+        2005년 충남 천안으로 자리를 옮겨, 40년 가까이 인쇄의 길을 걸어왔습니다.</p>
+        <p>오랫동안 C&amp;P는 Copy &amp; Print였습니다.<br />
+        2021년, 박물관과 미술관에서 전시를 기획해 온 학예사가 가업을 이어받으며<br />
+        그 이름에 새로운 의미를 더했습니다.</p>
+        <p>전시를 기획해 온 경험은 씨앤피시스템의 디자인 철학으로 이어집니다.<br />
+        전시가 관람객을 향하듯,<br />
+        인쇄물 역시 그것을 마주할 사람을 향해야 합니다.</p>
+        <p>무엇을 만들 것인가 보다, 무엇을 전할 것인가.<br />
+        이 질문에서 우리의 디자인은 시작됩니다.</p>
+        <p>이제 C&amp;P의 C는 <strong class="ci-orange">Creative</strong>입니다.</p>
+        <p>씨앤피시스템은 기획과 디자인, 인쇄와 제작을 아우릅니다.<br />
+        각 분야의 전문 파트너와 협력하여 목적에 맞는 방식으로, 필요한 만큼 완성합니다.</p>
       </div>
     </section>
 
@@ -211,7 +222,7 @@ PAGES["about/index.html"] = f"""{head("회사소개 | 씨앤피시스템", "1988
     </section>
 
     <section class="doc-section" aria-labelledby="about-strengths">
-      <h2 id="about-strengths">씨앤피의 세 가지 강점</h2>
+      <h2 id="about-strengths">씨앤피는 다릅니다</h2>
       <div class="about-cards">
         <div class="about-card">
           <h3>Creative · 쓰임을 생각하는 디자인</h3>
@@ -250,6 +261,7 @@ PAGES["about/index.html"] = f"""{head("회사소개 | 씨앤피시스템", "1988
     </section>
   </main>
 {FOOTER}
+{ORG_LD}
 {SCRIPTS}
 </body>
 </html>

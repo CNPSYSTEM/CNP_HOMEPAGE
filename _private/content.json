@@ -1,0 +1,276 @@
+{
+ "version": 1,
+ "hero": {
+  "image": "media/hero/hero-bookdream.jpg",
+  "w": 1536,
+  "h": 1024,
+  "posPc": [
+   50,
+   50
+  ],
+  "posMo": [
+   50,
+   50
+  ],
+  "scrim": 0,
+  "textColor": "black",
+  "layout": "free",
+  "bg": "#ffffff",
+  "pc": {
+   "x": 76,
+   "y": 53.5,
+   "z": 107,
+   "f": 0
+  },
+  "mo": {
+   "x": 54.8,
+   "y": 37.2,
+   "z": 72,
+   "f": 10
+  }
+ },
+ "categories": [
+  "리플렛·브로슈어",
+  "책자·도서",
+  "포스터",
+  "현수막·배너",
+  "스티커·라벨",
+  "명함·봉투",
+  "기타"
+ ],
+ "works": [
+  {
+   "id": "w001",
+   "slug": "sfa-open-house",
+   "title": "SFA AI Robotics Open House",
+   "status": "public",
+   "category": "리플렛·브로슈어",
+   "desc": "",
+   "specs": [],
+   "photos": [
+    {
+     "id": "p1",
+     "w": 1536,
+     "h": 1152,
+     "tw": 900,
+     "th": 675
+    }
+   ],
+   "cover": "p1",
+   "thumbFit": "cover",
+   "thumbPos": [
+    50,
+    50
+   ],
+   "created": "2026-11-18",
+   "updated": "2026-11-18",
+   "client": ""
+  },
+  {
+   "id": "w002",
+   "slug": "yean-kim-genealogy",
+   "title": "예안김씨 세보해설",
+   "status": "public",
+   "category": "책자·도서",
+   "desc": "",
+   "specs": [],
+   "photos": [
+    {
+     "id": "p1",
+     "w": 1536,
+     "h": 958,
+     "tw": 900,
+     "th": 561
+    }
+   ],
+   "cover": "p1",
+   "thumbFit": "cover",
+   "thumbPos": [
+    50,
+    50
+   ],
+   "created": "2026-11-18",
+   "updated": "2026-11-18",
+   "client": ""
+  },
+  {
+   "id": "w003",
+   "slug": "korea-public-forum",
+   "title": "한국 지방 공기업 정책포럼",
+   "status": "public",
+   "category": "리플렛·브로슈어",
+   "desc": "",
+   "specs": [],
+   "photos": [
+    {
+     "id": "p1",
+     "w": 2000,
+     "h": 1333,
+     "tw": 900,
+     "th": 600
+    }
+   ],
+   "cover": "p1",
+   "thumbFit": "cover",
+   "thumbPos": [
+    50,
+    50
+   ],
+   "created": "2026-11-18",
+   "updated": "2026-11-18",
+   "client": ""
+  },
+  {
+   "id": "w004",
+   "slug": "fire-education",
+   "title": "소방안전강사 장애학생지원 역량 강화",
+   "status": "public",
+   "category": "책자·도서",
+   "desc": "",
+   "specs": [],
+   "photos": [
+    {
+     "id": "p1",
+     "w": 2000,
+     "h": 1333,
+     "tw": 900,
+     "th": 600
+    },
+    {
+     "id": "p2",
+     "w": 2000,
+     "h": 1333,
+     "tw": 900,
+     "th": 600
+    }
+   ],
+   "cover": "p1",
+   "thumbFit": "cover",
+   "thumbPos": [
+    50,
+    50
+   ],
+   "created": "2026-11-18",
+   "updated": "2026-11-18",
+   "client": ""
+  },
+  {
+   "id": "w005",
+   "slug": "student-research",
+   "title": "학생탐구활동 연구일지",
+   "status": "public",
+   "category": "책자·도서",
+   "desc": "",
+   "specs": [],
+   "photos": [
+    {
+     "id": "p1",
+     "w": 1536,
+     "h": 1044,
+     "tw": 900,
+     "th": 612
+    }
+   ],
+   "cover": "p1",
+   "thumbFit": "cover",
+   "thumbPos": [
+    50,
+    50
+   ],
+   "created": "2026-11-18",
+   "updated": "2026-11-18",
+   "client": ""
+  },
+  {
+   "id": "w006",
+   "slug": "hahm-ensemble",
+   "title": "더함앙상블",
+   "status": "public",
+   "category": "포스터",
+   "desc": "",
+   "specs": [],
+   "photos": [
+    {
+     "id": "p1",
+     "w": 1536,
+     "h": 1152,
+     "tw": 900,
+     "th": 675
+    }
+   ],
+   "cover": "p1",
+   "thumbFit": "cover",
+   "thumbPos": [
+    50,
+    50
+   ],
+   "created": "2026-11-18",
+   "updated": "2026-11-18",
+   "client": ""
+  },
+  {
+   "id": "w007",
+   "slug": "bookdream",
+   "title": "책드림, 행복드림",
+   "status": "public",
+   "category": "리플렛·브로슈어",
+   "desc": "",
+   "specs": [],
+   "photos": [
+    {
+     "id": "p1",
+     "w": 1536,
+     "h": 1024,
+     "tw": 900,
+     "th": 600
+    }
+   ],
+   "cover": "p1",
+   "thumbFit": "cover",
+   "thumbPos": [
+    50,
+    50
+   ],
+   "created": "2026-11-18",
+   "updated": "2026-11-18",
+   "client": "천안시 도서관"
+  },
+  {
+   "id": "w008",
+   "slug": "life-theater",
+   "title": "인생극장 제1막",
+   "status": "public",
+   "category": "책자·도서",
+   "desc": "",
+   "specs": [],
+   "photos": [
+    {
+     "id": "p1",
+     "w": 1536,
+     "h": 1024,
+     "tw": 900,
+     "th": 600
+    }
+   ],
+   "cover": "p1",
+   "thumbFit": "cover",
+   "thumbPos": [
+    50,
+    50
+   ],
+   "created": "2026-11-18",
+   "updated": "2026-11-18",
+   "client": ""
+  }
+ ],
+ "order": [
+  "w001",
+  "w002",
+  "w003",
+  "w004",
+  "w005",
+  "w006",
+  "w007",
+  "w008"
+ ]
+}

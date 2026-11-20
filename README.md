@@ -36,7 +36,7 @@ python _tools/preview_server.py
 | `portfolio/작품주소/index.html` | 작품 상세 (관리자가 자동으로 만들고 지움) |
 | `media/` | 공개 중인 사진 (대문, 작품) |
 | `data/site.json`, `sitemap.xml` | 공개 작품 목록, 사이트맵 (관리자가 자동 갱신) |
-| `_private/` | **비공개 보관함** — 전체 내용(`content.json`)과 임시저장·비공개 작품 사진. 공개 저장소에 올리지 않음(.gitignore). 운영에서는 비공개 저장소 `CNP_HOMEPAGE_PRIVATE` 에 저장 |
+| `_private/` | 전체 내용(`content.json`)과 임시저장·비공개 작품 사진. 저장소에는 함께 올라가지만 사이트 주소로는 열리지 않음 |
 | `_templates/work.html` | 작품 상세 틀 |
 | `_tools/` | 미리보기 서버, 가짜 GitHub 시험 서버, 페이지 틀 도구, 메일 발송 스크립트, `설정_안내.md` |
 | `admin/` | 관리자 화면 |
@@ -49,23 +49,20 @@ python _tools/preview_server.py
 python _tools/test_github_server.py
 ```
 
-http://localhost:8792/admin/ (열쇠 `test-token-1`). 임시 폴더에 진짜 git 저장소 두 개(공개·보관함)를 만들어 운영과 같은 저장 방식으로 시험합니다. 이 폴더 파일은 바꾸지 않습니다.
+http://localhost:8792/admin/ (열쇠 `test-token-1`). 임시 폴더에 진짜 git 저장소를 만들어 운영과 같은 저장 방식으로 시험합니다. 이 폴더 파일은 바꾸지 않습니다.
 
 ## 회사소개 · 안내 문구 쓰기
 
 `about/index.html`, `guide/index.html` 안의 `▼ … 본문` 표시 사이를 고치면 됩니다.
 메뉴·바닥글을 바꿀 때는 `_tools/scaffold.py` 를 고친 뒤 `python _tools/scaffold.py` 를 실행합니다(작품 목록·대문 부분은 보존).
 
-## 운영 반영 전에 필요한 설정
+## 운영 설정
 
 `_tools/설정_안내.md` 에 대표님이 직접 하실 단계만 정리했습니다.
 
-1. 비공개 보관함 저장소 `CNP_HOMEPAGE_PRIVATE` 만들기
-2. 관리자 열쇠(토큰) 만들기 — 두 저장소에 Contents: Read and write
-3. 견적 메일 발송 — `_tools/apps_script_quote.gs` 를 업무용 구글 계정의 Apps Script 에 올리고, 나온 주소를 `js/config.js` 의 `PRODUCTION_QUOTE_ENDPOINT` 에 넣기
-
-배포 때 올리는 곳: 이 폴더(공개 대상만) → `CNP_HOMEPAGE`, `_private/` 내용 → `CNP_HOMEPAGE_PRIVATE`.
-배포 제외: `_private/`, `media/hero/hero-mwm8fvdo.jpg`(시험 사진), 미리보기 비밀번호·시험 메일 파일 (.gitignore).
+- 관리자 열쇠(토큰): 저장소 `CNP_HOMEPAGE` 하나에 Contents: Read and write (보관함 저장소는 쓰지 않음)
+- 견적 메일: 업무용 구글 계정의 Apps Script 웹 앱 — 주소는 `js/config.js` 의 `PRODUCTION_QUOTE_ENDPOINT`
+- 배포 제외: `media/hero/hero-mwm8fvdo.jpg`(시험 사진), 미리보기 비밀번호·시험 메일 파일 (.gitignore)
 
 ## 이전 버전(v1) 복구
 
