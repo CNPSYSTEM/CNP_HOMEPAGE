@@ -40,6 +40,54 @@
  ],
  "works": [
   {
+   "id": "wvqy4bi27",
+   "slug": "w261120-6rr",
+   "title": "임산부의 날 기념음악회 280일의 기적",
+   "status": "public",
+   "client": "더함앙상블",
+   "category": "리플렛·브로슈어",
+   "desc": "",
+   "specs": [],
+   "photos": [
+    {
+     "id": "pp16hsp",
+     "w": 2000,
+     "h": 1333,
+     "tw": 900,
+     "th": 600
+    },
+    {
+     "id": "pw1v6zp",
+     "w": 2000,
+     "h": 1600,
+     "tw": 900,
+     "th": 720
+    },
+    {
+     "id": "pu6glzw",
+     "w": 2000,
+     "h": 1600,
+     "tw": 900,
+     "th": 720
+    },
+    {
+     "id": "paawsc7",
+     "w": 2000,
+     "h": 1333,
+     "tw": 900,
+     "th": 600
+    }
+   ],
+   "cover": "pp16hsp",
+   "thumbFit": "cover",
+   "thumbPos": [
+    50,
+    50
+   ],
+   "created": "2026-11-20",
+   "updated": "2026-11-20"
+  },
+  {
    "id": "w4qlnj5xn",
    "slug": "w261120-fd0",
    "title": "소방특수",
@@ -312,6 +360,7 @@
   }
  ],
  "order": [
+  "wvqy4bi27",
   "w4qlnj5xn",
   "w001",
   "w002",
