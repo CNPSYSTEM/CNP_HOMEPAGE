@@ -40,6 +40,47 @@
  ],
  "works": [
   {
+   "id": "w27y6sbjz",
+   "slug": "w261120-gor",
+   "title": "소방안전강사를 위한 장애학생 지원 역량 강화",
+   "status": "public",
+   "client": "소방청, 국립특수교육원",
+   "category": "책자·도서",
+   "desc": "소방안전강사를 위한 장애학생 지원 역량 강화",
+   "specs": [],
+   "photos": [
+    {
+     "id": "p44x32l",
+     "w": 2000,
+     "h": 1335,
+     "tw": 900,
+     "th": 601
+    },
+    {
+     "id": "pq4bm7q",
+     "w": 2000,
+     "h": 1500,
+     "tw": 900,
+     "th": 675
+    },
+    {
+     "id": "p0wafuv",
+     "w": 2000,
+     "h": 2000,
+     "tw": 900,
+     "th": 900
+    }
+   ],
+   "cover": "p44x32l",
+   "thumbFit": "cover",
+   "thumbPos": [
+    50,
+    50
+   ],
+   "created": "2026-11-20",
+   "updated": "2026-11-20"
+  },
+  {
    "id": "woqxxg9uw",
    "slug": "w261120-9ok",
    "title": "또담, 네 마음에 닿기를",
@@ -401,6 +442,7 @@
   }
  ],
  "order": [
+  "w27y6sbjz",
   "woqxxg9uw",
   "wvqy4bi27",
   "w4qlnj5xn",
