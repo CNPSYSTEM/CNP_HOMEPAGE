@@ -83,10 +83,10 @@
   {
    "id": "w002",
    "slug": "yean-kim-genealogy",
-   "title": "예안김씨 세보해설",
+   "title": "예안김씨 세보해설(영산공파)",
    "status": "public",
    "category": "책자·도서",
-   "desc": "",
+   "desc": "예안김씨 세보해설",
    "specs": [],
    "photos": [
     {
@@ -104,8 +104,8 @@
     50
    ],
    "created": "2026-11-18",
-   "updated": "2026-11-18",
-   "client": ""
+   "updated": "2026-11-20",
+   "client": "예안김씨 영산공파"
   },
   {
    "id": "w003",
