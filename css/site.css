@@ -488,3 +488,20 @@ html.js .about .about-closing {
 }
 html.js .about .about-intro .doc-title { margin-bottom: clamp(16px, 3vh, 30px); }
 html.js .page-about .site-footer { margin-top: 0; }
+
+/* ==========================================================================
+   씨앤피는 다릅니다 — 가로형 둥근 상자(왼쪽 제목 · 오른쪽 설명)
+   ========================================================================== */
+.about-cards { grid-template-columns: 1fr; gap: clamp(10px, 1.6vh, 16px); }
+.about-card {
+  border: 1px solid var(--line); border-radius: 18px; background: var(--bg-soft);
+  padding: clamp(16px, 2.4vh, 24px) clamp(18px, 2.4vw, 30px);
+}
+.about-card h3 { border-top: 0; padding-top: 0; margin-bottom: 8px; }
+.about-card h3 .card-en { display: block; color: var(--brand); font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; line-height: 1.3; }
+.about-card h3 .card-ko { display: block; font-size: 1rem; font-weight: 700; margin-top: 2px; }
+.about-card p { margin: 0; }
+@media (min-width: 900px) {
+  .about-cards { grid-template-columns: repeat(3, 1fr); gap: clamp(12px, 1.4vw, 20px); }
+  .about-card h3 { margin-bottom: 12px; }
+}
