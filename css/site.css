@@ -490,18 +490,129 @@ html.js .about .about-intro .doc-title { margin-bottom: clamp(16px, 3vh, 30px); 
 html.js .page-about .site-footer { margin-top: 0; }
 
 /* ==========================================================================
-   씨앤피는 다릅니다 — 가로형 둥근 상자(왼쪽 제목 · 오른쪽 설명)
+   씨앤피는 다릅니다 — 가로로 펼친 책(왼쪽 면: 제목 · 오른쪽 면: 세 가지)
+   연한 파랑 바탕(화면 끝까지) 위에 흰 종이 한 장
    ========================================================================== */
-.about-cards { grid-template-columns: 1fr; gap: clamp(10px, 1.6vh, 16px); }
-.about-card {
-  border: 1px solid var(--line); border-radius: 18px; background: var(--bg-soft);
-  padding: clamp(16px, 2.4vh, 24px) clamp(18px, 2.4vw, 30px);
-}
-.about-card h3 { border-top: 0; padding-top: 0; margin-bottom: 8px; }
-.about-card h3 .card-en { display: block; color: var(--brand); font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; line-height: 1.3; }
-.about-card h3 .card-ko { display: block; font-size: 1rem; font-weight: 700; margin-top: 2px; }
-.about-card p { margin: 0; }
+.strengths { --tint: #eaf3f9; --rule: #dcdcdc; background: var(--tint); box-shadow: 0 0 0 100vmax var(--tint); clip-path: inset(0 -100vmax); }
+.home-sec.strengths { padding-top: clamp(20px, 3.5vh, 40px); padding-bottom: clamp(20px, 3.5vh, 40px); }
+.strengths .spread { background: #fff; border-radius: 22px; padding: clamp(22px, 3.6vh, 46px) clamp(20px, 3.4vw, 52px); }
+.strengths .spread-eyebrow { font-size: 0.74rem; font-weight: 700; letter-spacing: 0.18em; color: var(--brand); margin: 0 0 10px; }
+.strengths .spread-title h2,
+.about .doc-section.strengths .spread-title h2 { font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.25; color: var(--ink); margin: 0; }
+.strengths .spread-title h2::after { content: ""; display: block; width: 44px; height: 4px; margin-top: clamp(12px, 1.8vh, 18px); background: var(--accent); }
+.strengths .about-cards { display: block; margin-top: clamp(16px, 2.6vh, 26px); }
+.strengths .about-card { border: 0; border-radius: 0; background: none; padding: clamp(14px, 2.2vh, 24px) 0; border-top: 1px solid var(--rule); }
+.strengths .about-card:last-child { padding-bottom: 0; }
+.strengths .about-card h3 { border-top: 0; padding-top: 0; margin: 0 0 6px; }
+.strengths .about-card h3 .card-en { display: block; color: var(--accent); font-size: clamp(1.6rem, 2.6vw, 2.2rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; }
+.strengths .about-card h3 .card-ko { display: block; font-size: 1.02rem; font-weight: 700; margin-top: 4px; }
+.strengths .about-card p { margin: 0; }
 @media (min-width: 900px) {
-  .about-cards { grid-template-columns: repeat(3, 1fr); gap: clamp(12px, 1.4vw, 20px); }
-  .about-card h3 { margin-bottom: 12px; }
+  .strengths .spread { display: grid; grid-template-columns: 1fr 2.1fr; }
+  .strengths .spread-title { padding-right: clamp(24px, 3vw, 48px); display: flex; flex-direction: column; justify-content: center; }
+  .strengths .about-cards { margin-top: 0; padding-left: clamp(28px, 3.4vw, 56px); border-left: 1px solid var(--rule); }   /* 책 가운데 접힌 선 */
+  .strengths .about-card { display: grid; grid-template-columns: minmax(150px, 30%) 1fr; column-gap: clamp(20px, 2.4vw, 36px); align-items: start; }
+  .strengths .about-card:first-child { border-top: 0; padding-top: 0; }
+  .strengths .about-card h3 { display: contents; }
+  .strengths .about-card h3 .card-en { grid-column: 1; grid-row: 1 / span 2; }
+  .strengths .about-card h3 .card-ko { grid-column: 2; grid-row: 1; margin: 0 0 6px; padding-top: 0.35em; }
+  .strengths .about-card p { grid-column: 2; grid-row: 2; }
+}
+
+/* 컴퓨터에서도 대문의 '씨앤피는 다릅니다' / '서비스 분야'를 각각 한 장으로 */
+@media (min-width: 900px) {
+  html.js .home .home-intro { display: block; min-height: 0; padding-top: 0; padding-bottom: 0; }
+  html.js .home .home-sec, html.js .home .home-sec + .home-sec {
+    min-height: calc(100vh - var(--header-h)); min-height: calc(100svh - var(--header-h));
+    display: flex; flex-direction: column; justify-content: center;
+    padding: clamp(20px, 4vh, 48px) 0; margin-top: 0;
+  }
+  html.js .home .home-intro .about-table th, html.js .home .home-intro .about-table td { padding-top: clamp(10px, 1.8vh, 18px); padding-bottom: clamp(10px, 1.8vh, 18px); }
+  /* 회사소개: 펼친 책은 본문 폭보다 넓게 */
+  .about .strengths .spread { width: min(1060px, calc(100vw - var(--pad) * 2)); position: relative; left: 50%; transform: translateX(-50%); }
+}
+
+/* ==========================================================================
+   책 판면: 장마다 위·아래 여백을 똑같이 두고, 내용이 그 안을 채움
+   (컴퓨터 = 가로로 펼친 책 · 휴대폰 = 세로형 책 한 쪽)
+   ========================================================================== */
+html.js .home .home-sec, html.js .home .home-sec + .home-sec,
+html.js .about .doc-section.strengths { padding-top: var(--page-y); padding-bottom: var(--page-y); }
+html.js .home, html.js .about { --page-y: clamp(20px, 3.6vh, 30px); }
+html.js .home .home-sec > .spread,
+html.js .about .strengths > .spread { flex: 1 1 auto; }
+.spread-eyebrow { font-size: 0.74rem; font-weight: 700; letter-spacing: 0.18em; color: var(--brand); margin: 0 0 10px; }
+.services .spread-title h2 { font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.25; margin: 0; }
+.services .spread-title .about-note { margin: clamp(12px, 2vh, 18px) 0 clamp(14px, 2.4vh, 22px); color: var(--ink-soft); }
+/* 오른쪽 면의 세 가지가 면 높이를 고르게 나눠 가짐 */
+.strengths .about-cards { display: flex; flex-direction: column; }
+.strengths .about-card { flex: 1 1 auto; align-content: center; }
+.strengths .spread { display: flex; flex-direction: column; }
+.strengths .spread > .about-cards { flex: 1 1 auto; }
+@media (min-width: 900px) {
+  html.js .home, html.js .about { --page-y: clamp(36px, 8vh, 84px); }
+  .strengths .spread { display: grid; }
+  .services .spread { display: grid; grid-template-columns: 1fr 2.1fr; align-items: center;
+    padding: clamp(22px, 3.6vh, 46px) clamp(20px, 3.4vw, 52px); }
+  .services .spread-title { padding-right: clamp(24px, 3vw, 48px); align-self: stretch; display: flex; flex-direction: column; justify-content: center; }
+  .services .spread-title .about-note { margin-bottom: 0; }
+  .services .spread > .about-table { margin-left: clamp(28px, 3.4vw, 56px); width: calc(100% - clamp(28px, 3.4vw, 56px)); }
+  html.js .home .services .about-table th, html.js .home .services .about-table td { padding-top: clamp(12px, 2.6vh, 26px); padding-bottom: clamp(12px, 2.6vh, 26px); }
+}
+
+/* ==========================================================================
+   씨앤피는 다릅니다 — 흰 상자 3개 (컴퓨터: 한 줄에 3개 · 휴대폰: 세로로 3개)
+   ========================================================================== */
+.strengths .spread { background: none; border-radius: 0; padding: 0; display: flex; flex-direction: column; }
+.strengths .spread-title { padding: 0; display: block; margin-bottom: clamp(16px, 3vh, 36px); }
+.strengths .about-cards,
+.strengths .spread > .about-cards { display: grid; grid-template-columns: 1fr; gap: clamp(12px, 2vh, 18px); margin: 0; padding: 0; border: 0; flex: 1 1 auto; }
+.strengths .about-card,
+.strengths .about-card:first-child,
+.strengths .about-card:last-child { display: block; background: #fff; border: 0; border-radius: 20px; padding: clamp(16px, 2.6vh, 26px) clamp(18px, 4vw, 28px); }
+.strengths .about-card h3 { display: block; margin: 0 0 8px; }
+.strengths .about-card h3 .card-ko { margin: 4px 0 0; padding: 0; }
+@media (min-width: 900px) {
+  .strengths .spread { display: flex; }
+  .strengths .about-cards,
+  .strengths .spread > .about-cards { grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 2.4vw, 36px); align-items: stretch; }
+  .strengths .about-card,
+  .strengths .about-card:first-child,
+  .strengths .about-card:last-child { padding: clamp(28px, 5vh, 52px) clamp(24px, 2.6vw, 40px); }
+  .strengths .about-card h3 { margin-bottom: clamp(14px, 2.4vh, 24px); padding-bottom: clamp(14px, 2.4vh, 24px); border-bottom: 1px solid var(--rule); }
+  .strengths .about-card h3 .card-en { font-size: clamp(2rem, 3vw, 2.7rem); }
+  .strengths .about-card h3 .card-ko { margin-top: 10px; font-size: 1.08rem; }
+  .strengths .about-card p { font-size: 1.02rem; line-height: 1.9; }
+}
+.strengths .about-card { align-content: start; }   /* 상자 안 글은 위에서부터: 세 상자의 제목 줄이 나란히 */
+/* 상자 사이 여백 5% 더 */
+.strengths .about-cards, .strengths .spread > .about-cards { gap: calc(clamp(12px, 2vh, 18px) * 1.05); }
+@media (min-width: 900px) {
+  .strengths .about-cards, .strengths .spread > .about-cards { gap: calc(clamp(20px, 2.4vw, 36px) * 1.05); }
+}
+/* 상자 안: 여백 줄임 · 영문 제목/한글 부제/본문 간격 정리 · 세로 가운데 */
+.strengths .about-card,
+.strengths .about-card:first-child,
+.strengths .about-card:last-child { display: flex; flex-direction: column; justify-content: center; padding: clamp(14px, 2.2vh, 20px) clamp(18px, 4vw, 24px); }
+.strengths .about-card h3 { margin: 0 0 clamp(8px, 1.4vh, 12px); }
+.strengths .about-card h3 .card-en { line-height: 1.1; }
+.strengths .about-card h3 .card-ko { margin-top: 6px; line-height: 1.4; }
+.strengths .about-card p { line-height: 1.7; }
+@media (min-width: 900px) {
+  .strengths .about-card,
+  .strengths .about-card:first-child,
+  .strengths .about-card:last-child { padding: clamp(20px, 3vh, 30px) clamp(22px, 2.2vw, 32px); }
+  .strengths .about-card h3 { margin-bottom: clamp(14px, 2vh, 20px); padding-bottom: clamp(14px, 2vh, 20px); }
+  .strengths .about-card h3 .card-ko { margin-top: 8px; }
+  .strengths .about-card p { line-height: 1.75; }
+}
+/* 상자 높이는 글 길이에 맞추고(세 상자 같은 높이), 제목+상자 묶음을 장 가운데에 */
+html.js .home .home-sec.strengths > .spread,
+html.js .about .strengths > .spread { flex: 0 0 auto; }
+.strengths .spread > .about-cards { flex: 0 0 auto; }
+/* 컴퓨터(가로형): 상자 안 글은 위쪽 정렬 — 세 상자의 제목이 같은 높이 */
+@media (min-width: 900px) {
+  .strengths .about-card,
+  .strengths .about-card:first-child,
+  .strengths .about-card:last-child { justify-content: flex-start; }
 }

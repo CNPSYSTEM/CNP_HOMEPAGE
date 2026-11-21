@@ -108,8 +108,12 @@ PAGES["index.html"] = f"""{head(HOME_TITLE, HOME_DESC, "/")}
 
     <section class="panel" id="works" aria-label="소개와 포트폴리오">
       <div class="home-intro">
-        <section class="home-sec" aria-labelledby="home-strengths">
-          <h2 class="home-h" id="home-strengths">씨앤피는 다릅니다</h2>
+        <section class="home-sec strengths" aria-labelledby="home-strengths">
+          <div class="spread">
+          <div class="spread-title">
+            <p class="spread-eyebrow">CREATIVE &amp; PRINT SYSTEM</p>
+            <h2 class="home-h" id="home-strengths">씨앤피는 다릅니다</h2>
+          </div>
           <div class="about-cards">
             <div class="about-card">
               <h3><span class="card-en">Creative</span> <span class="card-ko">분야별 전문 디자이너가 맡는 디자인</span></h3>
@@ -124,11 +128,16 @@ PAGES["index.html"] = f"""{head(HOME_TITLE, HOME_DESC, "/")}
               <p>기획부터 완성품까지 씨앤피시스템이 맡아 진행합니다. 작업에 따라 분야별 전문 파트너와 함께하되, 상의는 한곳에서 하면 됩니다. 의도는 흐트러지지 않고, 일정은 단순해집니다.</p>
             </div>
           </div>
+          </div>
         </section>
 
-        <section class="home-sec" aria-labelledby="home-services">
-          <h2 class="home-h" id="home-services">서비스 분야</h2>
-          <p class="about-note">디자인부터 제작까지 함께 맡기셔도, 디자인이나 인쇄만 의뢰하셔도 됩니다.</p>
+        <section class="home-sec services" aria-labelledby="home-services">
+          <div class="spread">
+          <div class="spread-title">
+            <p class="spread-eyebrow">SERVICE</p>
+            <h2 class="home-h" id="home-services">서비스 분야</h2>
+            <p class="about-note">디자인부터 제작까지 함께 맡기셔도, 디자인이나 인쇄만 의뢰하셔도 됩니다.</p>
+          </div>
           <table class="about-table about-table-services">
             <tbody>
               <tr><th scope="row">브랜드 디자인</th><td>로고, BI, 명함</td></tr>
@@ -139,6 +148,7 @@ PAGES["index.html"] = f"""{head(HOME_TITLE, HOME_DESC, "/")}
               <tr><th scope="row">대형출력</th><td>현수막, 배너, 대형 포스터</td></tr>
             </tbody>
           </table>
+          </div>
         </section>
       </div>
 
@@ -229,8 +239,12 @@ PAGES["about/index.html"] = f"""{head("회사소개 | 씨앤피시스템", "1988
       </table>
     </section>
 
-    <section class="doc-section" aria-labelledby="about-strengths">
-      <h2 id="about-strengths">씨앤피는 다릅니다</h2>
+    <section class="doc-section strengths" aria-labelledby="about-strengths">
+      <div class="spread">
+      <div class="spread-title">
+        <p class="spread-eyebrow">CREATIVE &amp; PRINT SYSTEM</p>
+        <h2 id="about-strengths">씨앤피는 다릅니다</h2>
+      </div>
       <div class="about-cards">
         <div class="about-card">
           <h3><span class="card-en">Creative</span> <span class="card-ko">분야별 전문 디자이너가 맡는 디자인</span></h3>
@@ -244,6 +258,7 @@ PAGES["about/index.html"] = f"""{head("회사소개 | 씨앤피시스템", "1988
           <h3><span class="card-en">System</span> <span class="card-ko">기획부터 완성까지 한 창구에서</span></h3>
           <p>기획부터 완성품까지 씨앤피시스템이 맡아 진행합니다. 작업에 따라 분야별 전문 파트너와 함께하되, 상의는 한곳에서 하면 됩니다. 의도는 흐트러지지 않고, 일정은 단순해집니다.</p>
         </div>
+      </div>
       </div>
     </section>
 

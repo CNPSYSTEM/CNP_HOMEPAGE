@@ -61,8 +61,8 @@
     //   컴퓨터 : (씨앤피는 다릅니다 + 서비스 분야) → 포트폴리오
     function slides() {
       var secs = panel.querySelectorAll(".home-intro .home-sec");
-      var list = narrow.matches ? [secs[0], secs[1], panel.querySelector(".home-works")]
-                                : [panel.querySelector(".home-intro"), panel.querySelector(".home-works")];
+      // 컴퓨터·휴대폰 모두: 씨앤피는 다릅니다 → 서비스 분야 → 포트폴리오 (한 장씩)
+      var list = [secs[0], secs[1], panel.querySelector(".home-works")];
       return list.filter(Boolean);
     }
     function headerH() { var h = document.querySelector(".site-header"); return h ? h.getBoundingClientRect().height : 0; }
