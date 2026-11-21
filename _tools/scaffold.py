@@ -145,7 +145,7 @@ PAGES["index.html"] = f"""{head(HOME_TITLE, HOME_DESC, "/")}
       <section class="home-works" aria-labelledby="home-portfolio">
         <h2 class="sr-only" id="home-portfolio">포트폴리오</h2>
         <!-- 홈에는 최근 순서로 4줄(PC 16개 · 모바일 8개)까지만 보이고, 전체는 포트폴리오 페이지에서 봅니다 -->
-        <ul class="grid">
+        <ul class="grid fit4">
 <!--WORKS:START--><!--WORKS:END-->
         </ul>
         <p class="home-more"><a class="btn" href="/portfolio/">더 많은 포트폴리오 보기</a></p>
@@ -164,7 +164,7 @@ PAGES["portfolio/index.html"] = f"""{head("포트폴리오 | 씨앤피시스템"
 {header("/portfolio/")}
   <main id="main">
     <h1 class="sr-only">포트폴리오</h1>
-    <ul class="grid">
+    <ul class="grid fit4">
 <!--WORKS:START--><!--WORKS:END-->
     </ul>
   </main>
@@ -178,9 +178,8 @@ PAGES["about/index.html"] = f"""{head("회사소개 | 씨앤피시스템", "1988
 <body class="page page-about">
 {header("/about/")}
   <main id="main" class="doc doc-wide about">
-    <h1 class="doc-title">회사소개</h1>
-
     <section class="about-intro">
+      <h1 class="doc-title">회사소개</h1>
       <p class="about-eyebrow" lang="en">SINCE 1988 · CREATIVE &amp; PRINT SYSTEM</p>
       <p class="about-lead">Copy에서 Creative로,<br />
       축적된 인쇄의 경험에 디자인의 시선을 더하다.</p>

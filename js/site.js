@@ -5,6 +5,40 @@
   html.classList.add("js");
 
   /* =========================================================
+     0. 슬라이드 한 장에 내용 맞추기 (화면이 작으면 조금 줄여서 한 장에)
+     ========================================================= */
+  function fitSlides(els, avail) {
+    els.forEach(function (el) {
+      if (!el) return;
+      el.classList.add("fit-slide");
+      el.style.setProperty("--fit", "1");
+      function natural() {            // 최소 높이를 풀었을 때의 실제 내용 높이
+        var keep = el.style.minHeight;
+        el.style.minHeight = "0px";
+        var h = el.scrollHeight;
+        el.style.minHeight = keep;
+        return h;
+      }
+      var z = 1;
+      for (var i = 0; i < 3; i++) {   // 여백은 줄지 않으므로 두세 번 나눠 맞춤
+        var h = natural();
+        if (h <= avail + 1) break;
+        z = Math.max(0.72, z * (avail / h) * 0.995);
+        el.style.setProperty("--fit", z.toFixed(3));
+        if (z <= 0.72) break;
+      }
+    });
+  }
+  function onLayoutChange(fn) {
+    var t;
+    function run() { clearTimeout(t); t = setTimeout(fn, 60); }
+    window.addEventListener("resize", run);
+    window.addEventListener("load", fn);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fn);
+    fn();
+  }
+
+  /* =========================================================
      1. 대문 → 포트폴리오 목록 : 한 화면 단위 전환
      ========================================================= */
   var panel = document.getElementById("works");
@@ -37,6 +71,14 @@
       return slides().map(function (el) { return Math.max(0, Math.round(el.getBoundingClientRect().top - pr + panel.scrollTop - hh)); });
     }
     function lastPoint() { var p = points(); return p.length ? p[p.length - 1] : 0; }
+    // 화면 크기에 맞춰 각 장의 내용을 한 장 안에 넣음(포트폴리오 장은 CSS 가 크기를 맞춤)
+    function fitHome() {
+      var all = [panel.querySelector(".home-intro")].concat(Array.prototype.slice.call(panel.querySelectorAll(".home-intro .home-sec")));
+      all.forEach(function (el) { if (el) { el.classList.remove("fit-slide"); el.style.removeProperty("--fit"); } });
+      var active = slides().filter(function (el) { return !el.classList.contains("home-works"); });
+      fitSlides(active, panel.clientHeight - headerH());
+    }
+    onLayoutChange(fitHome);
 
     function setStage(next, instant) {
       if (instant) html.classList.add("no-anim");
@@ -304,7 +346,8 @@
       if (tops.length < 2) return [];
       var rowStep = tops[1].top - tops[0].top;                         // 한 줄 높이(간격 포함)
       var gap = Math.max(0, rowStep - tops[0].h);
-      var per = Math.max(1, Math.floor((window.innerHeight - hh) / rowStep)); // 한 화면에 온전히 보이는 줄 수
+      var per = grid.classList.contains("fit4") ? 4                            // 한 화면 = 4줄
+        : Math.max(1, Math.floor((window.innerHeight - hh) / rowStep));
       var out = [];
       for (var i = per; i < tops.length; i += per) out.push(tops[i].top - hh - gap);
       return out;
@@ -312,10 +355,15 @@
   }
   // 회사소개 페이지: 소개글 → 회사개요 → 강점 → 서비스 분야 → 마무리
   if (document.body.classList.contains("page-about")) {
+    var aboutSlides = function () {
+      return Array.prototype.slice.call(document.querySelectorAll(".about .about-intro, .about .doc-section, .about .about-closing"));
+    };
+    onLayoutChange(function () {
+      var h = document.querySelector(".site-header");
+      fitSlides(aboutSlides(), window.innerHeight - (h ? h.getBoundingClientRect().height : 0));
+    });
     initPageSlides(function (hh) {
-      return Array.prototype.map.call(document.querySelectorAll(".about .doc-section, .about .about-closing"), function (el) {
-        return el.getBoundingClientRect().top + window.scrollY - hh;
-      });
+      return aboutSlides().slice(1).map(function (el) { return el.getBoundingClientRect().top + window.scrollY - hh; });
     });
   }
 

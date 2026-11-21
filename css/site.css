@@ -453,3 +453,38 @@ html.js .home .home-works { padding-top: 0; }
 ::selection { background: var(--brand); color: #fff; }
 /* 대문 화살표 = 주황 */
 .hero-img.t-black ~ .hero-next span { border-color: var(--accent); }
+
+/* ==========================================================================
+   슬라이드(한 화면 한 장) — 화면 크기에 맞춰 내용이 한 장 안에 들어가도록
+   ========================================================================== */
+/* 내용이 화면보다 길면 js 가 --fit(축소 비율)을 넣어 한 장에 맞춤 */
+.fit-slide > * { zoom: var(--fit, 1); }
+
+/* 포트폴리오: 한 화면에 4줄이 모두 보이도록 썸네일 크기를 화면 높이에 맞춤 */
+.grid.fit4 {
+  --cols: 2; --rows: 4; --extra: 0px;
+  --avail-h: calc(100vh - var(--header-h) - var(--gap) * 2 - var(--extra));
+  --cell: min(calc((100vw - var(--gap) * (var(--cols) + 1)) / var(--cols)),
+              calc((var(--avail-h) - var(--gap) * (var(--rows) - 1)) / var(--rows)));
+  grid-template-columns: repeat(var(--cols), var(--cell));
+  justify-content: center;
+}
+@supports (height: 100svh) {
+  .grid.fit4 { --avail-h: calc(100svh - var(--header-h) - var(--gap) * 2 - var(--extra)); }
+}
+@media (min-width: 900px) { .grid.fit4 { --cols: 4; } }
+/* 홈의 포트폴리오 장: 4줄 + '더 많은 포트폴리오 보기' 버튼까지 한 화면 */
+.home-works .grid.fit4 { --extra: 88px; }
+html.js .home .home-more { height: 88px; padding: 0 var(--pad); align-items: center; }
+
+/* 회사소개: 구간마다 한 화면 */
+html.js .about.doc { padding-top: var(--header-h); padding-bottom: 0; min-height: 0; }
+html.js .about .about-intro,
+html.js .about .doc-section,
+html.js .about .about-closing {
+  min-height: calc(100vh - var(--header-h)); min-height: calc(100svh - var(--header-h));
+  display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(16px, 3vh, 40px) 0; margin: 0; border-top: 0;
+}
+html.js .about .about-intro .doc-title { margin-bottom: clamp(16px, 3vh, 30px); }
+html.js .page-about .site-footer { margin-top: 0; }
