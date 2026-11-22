@@ -30,6 +30,17 @@
  },
  "works": [
   {
+   "slug": "w261122-bna",
+   "title": "한국메티슨특수가스 방문자 안전 가이드북",
+   "client": "한국메티슨특수가스",
+   "thumb": "/media/works/wxska4oaw/phh36n6_t.jpg",
+   "fit": "cover",
+   "pos": [
+    4,
+    50
+   ]
+  },
+  {
    "slug": "w261120-zak",
    "title": "더함 기획시리즈 2 낭만주의 거장 차이코프스키",
    "client": "더함앙상블",

@@ -42,6 +42,33 @@
  ],
  "works": [
   {
+   "id": "wxska4oaw",
+   "slug": "w261122-bna",
+   "title": "한국메티슨특수가스 방문자 안전 가이드북",
+   "status": "public",
+   "client": "한국메티슨특수가스",
+   "category": "리플렛·브로슈어",
+   "desc": "",
+   "specs": [],
+   "photos": [
+    {
+     "id": "phh36n6",
+     "w": 2000,
+     "h": 1334,
+     "tw": 900,
+     "th": 600
+    }
+   ],
+   "cover": "phh36n6",
+   "thumbFit": "cover",
+   "thumbPos": [
+    4,
+    50
+   ],
+   "created": "2026-11-22",
+   "updated": "2026-11-22"
+  },
+  {
    "id": "wrupc80zw",
    "slug": "w261120-zak",
    "title": "더함 기획시리즈 2 낭만주의 거장 차이코프스키",
@@ -559,6 +586,7 @@
   }
  ],
  "order": [
+  "wxska4oaw",
   "wrupc80zw",
   "wp7yu1jfk",
   "w8d07u4wr",
